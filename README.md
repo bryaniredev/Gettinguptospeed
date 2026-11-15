@@ -10,7 +10,7 @@ Plain HTML, CSS and JavaScript. Content lives in `data/*.json`; see `CLAUDE.md` 
 
 ## Publish
 
-Settings → Pages → Source: **Deploy from a branch** → pick the branch and `/ (root)`.
+Settings → Pages → Source: **GitHub Actions**. `.github/workflows/pages.yml` deploys on every push.
 
 ## Preview locally
 

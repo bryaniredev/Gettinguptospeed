@@ -2,21 +2,274 @@
   "updated": "2026-11-15",
   "posts": [
     {
-      "id": "fable-fps-one-prompt",
-      "date": "2026-11-15",
-      "title": "A playable first-person shooter from one prompt",
-      "creator": "An Anthropic engineer",
+      "id": "starry-nightrider",
+      "date": "2026-11-10",
+      "title": "Starry Nightrider",
+      "creator": "@ebbyamir",
+      "model": "Claude Fable 5.2",
+      "lab": "Anthropic",
+      "emoji": "🌌",
+      "blurb": "Van Gogh rides through his own Starry Night, as a game you can play in the browser.",
+      "source": "Play it",
+      "url": "https://starrynightrider.com",
+      "tags": [
+        "game",
+        "art"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/173.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "saltline-fps",
+      "date": "2026-11-09",
+      "title": "Saltline: a first-person shooter from one-shot prompts",
+      "creator": "@felixrieseberg",
       "model": "Claude Fable 5.2",
       "lab": "Anthropic",
       "emoji": "🎯",
-      "blurb": "One prompt, then eight hours of the model working on its own. Out came a browser FPS you can actually play. Reported API cost: about $550.",
-      "source": "The New Stack",
-      "url": "https://thenewstack.io/claude-fable-game-demos/",
-      "tags": ["game", "long-running"]
+      "blurb": "Built by an Anthropic engineer with one-shot prompts and no human feedback: 8 hours, about $550. The models, sounds and textures are all generated in code.",
+      "source": "Play it",
+      "url": "https://claude.ai/artifact/BGY1SztrAYcJQHSsnHHGmp",
+      "tags": [
+        "game",
+        "long-running"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/001.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "oil-paint-game",
+      "date": "2026-11-10",
+      "title": "Oil Paint: a game where every frame is a painting",
+      "creator": "@BlendiByl",
+      "model": "Claude Fable 5.2",
+      "lab": "Anthropic",
+      "emoji": "🖌️",
+      "blurb": "Made in under an hour. Each frame is about 1.5 million brush strokes, running at 200 fps in a browser tab. Open source.",
+      "source": "Play it",
+      "url": "https://patch.gg/blendi/oil-paint",
+      "tags": [
+        "game",
+        "graphics"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/124.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "crosstown-nyc",
+      "date": "2026-11-10",
+      "title": "CROSSTOWN: an open-world New York (early preview)",
+      "creator": "@mattshumer_",
+      "model": "Claude Fable 5.2",
+      "lab": "Anthropic",
+      "emoji": "🗽",
+      "blurb": "An attempt at an open-world city game built in days. Only part of the city is in so far.",
+      "source": "Try the preview",
+      "url": "https://nyc.somethingbig.ai/",
+      "tags": [
+        "game",
+        "open-world"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/125.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "blender-laptop-room",
+      "date": "2026-11-09",
+      "title": "A whole room built in Blender from one prompt",
+      "creator": "@rileybrown",
+      "model": "Claude Fable 5.2",
+      "lab": "Anthropic",
+      "emoji": "💻",
+      "blurb": "One prompt built the room in Blender and rendered it in 4K. The link opens the web page shown on the laptop screen in the scene.",
+      "source": "Open it",
+      "url": "https://claude.ai/artifact/QGWUAjRrzRzZWGcQzSMLfa",
+      "tags": [
+        "3d",
+        "blender"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/023.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "claudia-gallery",
+      "date": "2026-11-09",
+      "title": "Claudia Gallery: \"make the video of your dreams\"",
+      "creator": "@anabology",
+      "model": "Claude Fable 5.2",
+      "lab": "Anthropic",
+      "emoji": "🎞️",
+      "blurb": "The model was asked to make the video of its dreams. Two prompts and 9 hours later, this gallery came out.",
+      "source": "Visit",
+      "url": "https://claudia.gallery",
+      "tags": [
+        "video",
+        "art"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/038.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "amagiri",
+      "date": "2026-11-08",
+      "title": "AMAGIRI: sword fighting in a rain-soaked shrine",
+      "creator": "murphy / mafeis",
+      "model": "GPT-6 Astra",
+      "lab": "OpenAI",
+      "emoji": "⚔️",
+      "blurb": "Slash and parry through a shrine in the rain, build up Focus for a finishing move, and pick sword upgrades between acts.",
+      "source": "Play it",
+      "url": "https://mafeis.github.io/amagiri/",
+      "tags": [
+        "game",
+        "action"
+      ],
+      "image": "https://raw.githubusercontent.com/MartinDelophy/awesome-gpt-6-astra/main/assets/screenshots/amagiri/gameplay.jpg",
+      "via": "awesome-gpt-6-astra list",
+      "viaUrl": "https://github.com/MartinDelophy/awesome-gpt-6-astra"
+    },
+    {
+      "id": "potato-league",
+      "date": "2026-11-08",
+      "title": "Potato League: 3D car soccer",
+      "creator": "Prompt Potato",
+      "model": "GPT-6 Astra",
+      "lab": "OpenAI",
+      "emoji": "⚽",
+      "blurb": "Boost, jump and flip a car into the ball. Has bot matches plus hockey and basketball variants.",
+      "source": "Play it",
+      "url": "https://promptpotatogames.itch.io/potato-league",
+      "tags": [
+        "game",
+        "sports"
+      ],
+      "image": "https://raw.githubusercontent.com/MartinDelophy/awesome-gpt-6-astra/main/assets/screenshots/potato-league/gameplay.jpg",
+      "via": "awesome-gpt-6-astra list",
+      "viaUrl": "https://github.com/MartinDelophy/awesome-gpt-6-astra"
+    },
+    {
+      "id": "moxriding",
+      "date": "2026-11-07",
+      "title": "MoxRiding: a city skate session",
+      "creator": "Moxazza",
+      "model": "GPT-6 Astra",
+      "lab": "OpenAI",
+      "emoji": "🛹",
+      "blurb": "Chain ollies, aerial tricks and rail grinds against the clock, then roll straight for two seconds to bank the combo.",
+      "source": "Play it",
+      "url": "https://www.moxride.com/home/moxriding",
+      "tags": [
+        "game",
+        "sports"
+      ],
+      "image": "https://raw.githubusercontent.com/MartinDelophy/awesome-gpt-6-astra/main/assets/screenshots/moxriding/gameplay.jpg",
+      "via": "awesome-gpt-6-astra list",
+      "viaUrl": "https://github.com/MartinDelophy/awesome-gpt-6-astra"
+    },
+    {
+      "id": "crash-city-breakers",
+      "date": "2026-10-23",
+      "title": "CRASH! City Breakers",
+      "creator": "Olivia Pan",
+      "model": "GPT-6 Astra",
+      "lab": "OpenAI",
+      "emoji": "💥",
+      "blurb": "Crash into traffic, then steer your wreck to keep a physics-driven chain reaction going across three cities.",
+      "source": "Play it",
+      "url": "https://crash-city-breakers.vercel.app/",
+      "tags": [
+        "game",
+        "physics"
+      ],
+      "image": "https://raw.githubusercontent.com/MartinDelophy/awesome-gpt-6-astra/main/assets/screenshots/crash-city-breakers/gameplay.png",
+      "via": "awesome-gpt-6-astra list",
+      "viaUrl": "https://github.com/MartinDelophy/awesome-gpt-6-astra"
+    },
+    {
+      "id": "carbon-fuji-garden",
+      "date": "2026-10-21",
+      "title": "Fuji Garden: a tiny living Japanese garden",
+      "creator": "@doe_naps",
+      "model": "Gemini 4 Carbon",
+      "lab": "Google",
+      "emoji": "🗻",
+      "blurb": "A miniature garden with reflections and moving people that you can explore, including from a butterfly's point of view.",
+      "source": "Watch on X",
+      "url": "https://x.com/doe_naps/status/2112975635337593132",
+      "tags": [
+        "3d",
+        "scene"
+      ],
+      "image": "https://pub-62cf7640cd0f4066b60933bd2e9b85ef.r2.dev/github-repo-media/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases/posters/2112972423893221376-a5bc633b97f3.jpg",
+      "via": "Gemini 4 Carbon use cases list",
+      "viaUrl": "https://github.com/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases"
+    },
+    {
+      "id": "carbon-hogwarts-voxel",
+      "date": "2026-10-21",
+      "title": "A voxel Hogwarts you can look around",
+      "creator": "@dummerspast39",
+      "model": "Gemini 4 Carbon",
+      "lab": "Google",
+      "emoji": "🏰",
+      "blurb": "A castle made of tiny cubes, with interior and exterior views. The creator says this was the best of four attempts.",
+      "source": "Watch on X",
+      "url": "https://x.com/dummerspast39/status/2112989454239416450",
+      "tags": [
+        "3d",
+        "voxel"
+      ],
+      "image": "https://pub-62cf7640cd0f4066b60933bd2e9b85ef.r2.dev/github-repo-media/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases/posters/2112989347301519360-42c02806db71.jpg",
+      "via": "Gemini 4 Carbon use cases list",
+      "viaUrl": "https://github.com/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases"
+    },
+    {
+      "id": "carbon-mechanical-flower",
+      "date": "2026-10-21",
+      "title": "A mechanical flower (with a surprise bee)",
+      "creator": "@thtbee_",
+      "model": "Gemini 4 Carbon",
+      "lab": "Google",
+      "emoji": "🌸",
+      "blurb": "A three.js flower with changing materials and lighting. The creator says the model added the bee after an open-ended request.",
+      "source": "Watch on X",
+      "url": "https://x.com/thtbee_/status/2112935205703147750",
+      "tags": [
+        "3d",
+        "three.js"
+      ],
+      "image": "https://pub-62cf7640cd0f4066b60933bd2e9b85ef.r2.dev/github-repo-media/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases/posters/2112929911149371392-e771176b9f52.jpg",
+      "via": "Gemini 4 Carbon use cases list",
+      "viaUrl": "https://github.com/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases"
+    },
+    {
+      "id": "carbon-sky-railway",
+      "date": "2026-10-21",
+      "title": "Sky railway city",
+      "creator": "@SPAC89",
+      "model": "Gemini 4 Carbon",
+      "lab": "Google",
+      "emoji": "🚝",
+      "blurb": "A fantasy scene with a train running on elevated tracks between towers.",
+      "source": "Watch on X",
+      "url": "https://x.com/SPAC89/status/2112849450993336595",
+      "tags": [
+        "3d",
+        "scene"
+      ],
+      "image": "https://pub-62cf7640cd0f4066b60933bd2e9b85ef.r2.dev/github-repo-media/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases/posters/2112848304245481472-1988e3f7ab74.jpg",
+      "via": "Gemini 4 Carbon use cases list",
+      "viaUrl": "https://github.com/cheercheung/awesome-gemini-4-carbon-guide-and-use-cases"
     },
     {
       "id": "fable-fermat-1000-agents",
-      "date": "2026-11-15",
+      "date": "2026-11-09",
       "title": "1,000 agents reproduce a formal proof of Fermat's Last Theorem",
       "creator": "Anthropic",
       "model": "Claude Fable 5.2 (early build)",
@@ -25,76 +278,14 @@
       "blurb": "A team of a thousand agents worked together, under layered safety controls, to reproduce a machine-checked proof of one of maths' most famous theorems.",
       "source": "Claude developer blog",
       "url": "https://claude.dev/blog/safely-scaling-multi-agent-teams-with-fable-5-2/",
-      "tags": ["maths", "multi-agent"]
-    },
-    {
-      "id": "astra-ableton-mcp",
-      "date": "2026-11-15",
-      "title": "A full music track, made by driving Ableton",
-      "creator": "Community build",
-      "model": "GPT-6 Astra",
-      "lab": "OpenAI",
-      "emoji": "🎹",
-      "blurb": "A creator connected the model to Ableton Live through MCP, asked for a song, and got a complete arranged track back.",
-      "source": "JZ Creates roundup",
-      "url": "https://jzcreates.com/blog/best-gpt-6-astra-examples/",
-      "tags": ["music", "mcp"]
-    },
-    {
-      "id": "astra-zillow-3d",
-      "date": "2026-11-15",
-      "title": "A house listing turned into a walkable 3D model",
-      "creator": "Community build",
-      "model": "GPT-6 Astra",
-      "lab": "OpenAI",
-      "emoji": "🏠",
-      "blurb": "Feed it the photos from a Zillow listing and it rebuilds the house as a 3D model you can look around.",
-      "source": "JZ Creates roundup",
-      "url": "https://jzcreates.com/blog/best-gpt-6-astra-examples/",
-      "tags": ["3d", "vision"]
-    },
-    {
-      "id": "astra-manhattan-unreal",
-      "date": "2026-11-15",
-      "title": "Manhattan, rebuilt street by street in Unreal Engine",
-      "creator": "Community build",
-      "model": "GPT-6 Astra",
-      "lab": "OpenAI",
-      "emoji": "🏙️",
-      "blurb": "A creator had the model reconstruct Manhattan block by block inside Unreal Engine.",
-      "source": "AI Alvin: 20 Astra demos",
-      "url": "https://aialvin.substack.com/p/gpt-6-astra-unleashed-20-insane-demos",
-      "tags": ["3d", "world-building"]
-    },
-    {
-      "id": "astra-steam-train-blender",
-      "date": "2026-11-15",
-      "title": "An old drawing becomes a 3D steam train",
-      "creator": "Community build",
-      "model": "GPT-6 Astra",
-      "lab": "OpenAI",
-      "emoji": "🚂",
-      "blurb": "Starting from an old technical drawing, the model built a full steam locomotive in Blender.",
-      "source": "AI Alvin: 20 Astra demos",
-      "url": "https://aialvin.substack.com/p/gpt-6-astra-unleashed-20-insane-demos",
-      "tags": ["3d", "blender"]
-    },
-    {
-      "id": "awesome-fable-list",
-      "date": "2026-11-15",
-      "title": "151 live things built with Fable 5.2, all in one list",
-      "creator": "fengyiqicoder",
-      "model": "Claude Fable 5.2",
-      "lab": "Anthropic",
-      "emoji": "🗂️",
-      "blurb": "Games, 3D worlds and web pages you can open in your browser, plus 111 video demos, each with a preview and a credit to whoever made it. Updated daily.",
-      "source": "GitHub",
-      "url": "https://github.com/fengyiqicoder/awesome-fable-5.2",
-      "tags": ["collection", "games"]
+      "tags": [
+        "maths",
+        "multi-agent"
+      ]
     },
     {
       "id": "fable-pokemon-memory",
-      "date": "2026-11-15",
+      "date": "2026-11-06",
       "title": "Four Pokémon Red badges on ten tidy notes",
       "creator": "Anthropic",
       "model": "Claude Fable 5",
@@ -103,46 +294,26 @@
       "blurb": "An older model playing Pokémon Red wrote 413 note files and earned one badge. Fable 5 kept just 10 files and earned four. Better notes, not more notes.",
       "source": "Anthropic Engineering",
       "url": "https://www.anthropic.com/engineering/components-of-agent-memory",
-      "tags": ["game", "memory"]
-    },
-    {
-      "id": "gpt-image-26-gifs",
-      "date": "2026-11-15",
-      "title": "4K images and looping GIFs from a text prompt",
-      "creator": "OpenAI",
-      "model": "GPT Image 2.6",
-      "lab": "OpenAI",
-      "emoji": "🖼️",
-      "blurb": "Released November 4. People are using it for posters, paper-cut style scenes and short looping animations.",
-      "source": "Wikipedia",
-      "url": "https://en.wikipedia.org/wiki/GPT_Image",
-      "tags": ["image", "new-model"]
+      "tags": [
+        "game",
+        "memory"
+      ]
     },
     {
       "id": "curative-contracts-agent",
-      "date": "2026-11-15",
+      "date": "2026-11-10",
       "title": "An agent that negotiates 2,000 contracts a week",
       "creator": "Curative",
       "model": "Claude",
       "lab": "Anthropic",
       "emoji": "🤝",
-      "blurb": "A health insurer built a deal-making agent that handles more than 2,000 provider contract negotiations every week to build a national network.",
+      "blurb": "Curative built a deal-making agent that negotiates more than 2,000 provider contracts a week to build a national provider network.",
       "source": "Claude blog",
       "url": "https://claude.com/resources/articles/how-curative-is-building-a-national-provider-network-with-agents-on-claude",
-      "tags": ["business", "agents"]
-    },
-    {
-      "id": "kandinsky-6-video",
-      "date": "2026-11-15",
-      "title": "An open video model you can download and run",
-      "creator": "Kandinsky Lab",
-      "model": "Kandinsky 6.0 Video",
-      "lab": "Open source",
-      "emoji": "🎬",
-      "blurb": "Code and weights published under the MIT licence in two sizes, a 29B Pro and a 3B Lite, so anyone can generate video on their own hardware.",
-      "source": "SiliconFlow guide",
-      "url": "https://www.siliconflow.com/articles/best-open-source-video-generation-models-2025",
-      "tags": ["video", "open-weights"]
+      "tags": [
+        "business",
+        "agents"
+      ]
     }
   ]
 }

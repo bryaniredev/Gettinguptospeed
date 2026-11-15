@@ -17,7 +17,10 @@
           "try": "Set CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1 before starting claude in a terminal. Terminal only for now, and a Code Mode session can only be resumed with Code Mode on.",
           "source": "Claude Code docs",
           "url": "https://code.claude.com/docs/en/code-mode",
-          "tags": ["tokens", "claude-code"]
+          "tags": [
+            "tokens",
+            "claude-code"
+          ]
         },
         {
           "headline": "When to fold subagents back into your main agent",
@@ -25,7 +28,10 @@
           "try": "Keep a subagent only when it runs in parallel, needs a throwaway context for noisy work, or your eval shows the single loop doing worse. Fold in one at a time and re-run the eval.",
           "source": "Claude blog",
           "url": "https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop",
-          "tags": ["tokens", "architecture"]
+          "tags": [
+            "tokens",
+            "architecture"
+          ]
         },
         {
           "headline": "Message threads: send the conversation once",
@@ -33,7 +39,10 @@
           "try": "If you build on the API, add the thread parameter and handle the 5-minute idle expiry by resending the full conversation.",
           "source": "Claude blog",
           "url": "https://claude.com/resources/articles/message-threads",
-          "tags": ["speed", "api"]
+          "tags": [
+            "speed",
+            "api"
+          ]
         },
         {
           "headline": "The components of agent memory, and why agents should 'dream'",
@@ -41,7 +50,10 @@
           "try": "Tell the agent what memory is for instead of giving it a procedure. Store only what it can't look up again, and mark which facts are verified.",
           "source": "Anthropic Engineering",
           "url": "https://www.anthropic.com/engineering/components-of-agent-memory",
-          "tags": ["tokens", "memory"]
+          "tags": [
+            "tokens",
+            "memory"
+          ]
         },
         {
           "headline": "Building always-on agents",
@@ -49,7 +61,10 @@
           "try": "Keep the baseline lean and cache it. Before compaction or a fresh session, write anything important to memory.",
           "source": "Claude blog",
           "url": "https://claude.com/resources/articles/building-always-on-agents",
-          "tags": ["architecture", "tokens"]
+          "tags": [
+            "architecture",
+            "tokens"
+          ]
         }
       ],
       "quickHits": [
@@ -72,6 +87,14 @@
         {
           "text": "/claude-api latency-optimize finds where your Claude API code makes people wait and tries faster settings against your eval.",
           "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "Simon Willison: \"The October inflection point for vibe game development\" (28 Oct).",
+          "url": "https://simonwillison.net/2026/Oct/28/vibe-game-development/"
+        },
+        {
+          "text": "Simon Willison: \"Hide your slop PR descriptions behind <details><summary>\" (9 Nov).",
+          "url": "https://simonwillison.net/2026/Nov/9/details-summary/"
         },
         {
           "text": "Heads-up: fast mode for Opus 4.8 is deprecated and goes away on November 30.",

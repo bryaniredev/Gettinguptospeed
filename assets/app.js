@@ -159,7 +159,8 @@
           <div class="avatar" aria-hidden="true">${esc((p.lab || '?')[0])}</div>
           <div class="who"><b>${esc(p.model)}</b><span>${esc(p.creator)} · ${fmtShort(p.date)}</span></div>
         </div>
-        <a class="poster" href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">
+        <a class="poster${p.image ? ' has-img' : ''}" href="${safeUrl(p.url)}" target="_blank" rel="noopener noreferrer">
+          ${p.image ? `<img src="${safeUrl(p.image)}" alt="" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="this.parentNode.classList.remove('has-img');this.remove()">` : ''}
           <span class="pill">${esc(p.lab)}</span>
           <span class="emoji" aria-hidden="true">${esc(p.emoji || '✨')}</span>
           <h3>${esc(p.title)}</h3>
@@ -167,10 +168,10 @@
         <div class="post-body">
           <div class="actions">
             <button class="like" data-id="${esc(p.id)}" aria-pressed="${liked.includes(p.id)}" aria-label="Like">${liked.includes(p.id) ? '♥' : '♡'}</button>
-            ${link(p.url, `See it · ${esc(p.source)} →`)}
+            ${link(p.url, `${esc(p.source)} →`)}
           </div>
           <p>${esc(p.blurb)}</p>
-          <div class="hash">${(p.tags || []).map((t) => `#${esc(t)}`).join(' ')}</div>
+          <div class="hash">${(p.tags || []).map((t) => `#${esc(t)}`).join(' ')}${p.via ? ` · via ${link(p.viaUrl, esc(p.via))}` : ''}</div>
         </div>
       </article>`).join('');
   }
