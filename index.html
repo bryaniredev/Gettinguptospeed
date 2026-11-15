@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow, noarchive, nosnippet, noimageindex">
+<meta name="googlebot" content="noindex, nofollow">
+<meta name="referrer" content="no-referrer">
+<title>Getting Up To Speed</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="stylesheet" href="assets/styles.css">
+</head>
+<body>
+<header class="top">
+  <div class="wrap top-row">
+    <a class="brand" href="#glossary"><span class="bolt">⚡</span> Getting Up To Speed</a>
+    <nav class="tabs" role="tablist" aria-label="Sections">
+      <button role="tab" id="tab-glossary" data-tab="glossary" aria-controls="panel-glossary">Glossary</button>
+      <button role="tab" id="tab-brief" data-tab="brief" aria-controls="panel-brief">Daily Brief</button>
+      <button role="tab" id="tab-showcase" data-tab="showcase" aria-controls="panel-showcase">Showcase</button>
+    </nav>
+  </div>
+</header>
+
+<main>
+  <section id="panel-glossary" class="panel wrap" role="tabpanel" aria-labelledby="tab-glossary" hidden>
+    <div class="searchbar">
+      <label class="sr-only" for="q">Search the glossary</label>
+      <input id="q" type="search" placeholder="Search terms, e.g. subagent, tokens, memory…" autocomplete="off" spellcheck="false">
+      <span id="count" class="count" aria-live="polite"></span>
+    </div>
+    <p class="lede">The words you need for building software with AI agents, explained plainly. Newest terms first.</p>
+    <div id="chips" class="chips" aria-label="Filter by category"></div>
+    <div id="terms" class="terms"></div>
+    <p id="empty" class="empty" hidden>No terms match that search.</p>
+  </section>
+
+  <section id="panel-brief" class="panel wrap narrow" role="tabpanel" aria-labelledby="tab-brief" hidden>
+    <div id="issue"></div>
+    <div id="archive" class="archive"></div>
+  </section>
+
+  <section id="panel-showcase" class="panel" role="tabpanel" aria-labelledby="tab-showcase" hidden>
+    <div class="feed">
+      <p class="lede center">Cool things people are making with the newest AI models, from every lab.</p>
+      <div id="labchips" class="chips center" aria-label="Filter by lab"></div>
+      <div id="posts"></div>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <span id="updated"></span>
+  <span>Sources: Anthropic and developers working at the front of Claude. Showcase covers all labs.</span>
+</footer>
+
+<script src="assets/app.js"></script>
+</body>
+</html>

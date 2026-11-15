@@ -1,0 +1,429 @@
+{
+  "updated": "2026-11-15",
+  "terms": [
+    {
+      "term": "Always-on agent",
+      "date": "2026-11-13",
+      "cat": "Agents",
+      "def": "An agent that seems to be awake 24/7 but is actually asleep most of the time. Something pokes it (a message, a timer, a webhook), it wakes up, does a short burst of work, writes down what it learned, and goes back to sleep. Think of a night-shift security guard who naps between alarms and keeps a logbook so the next shift knows what happened.",
+      "why": "It's the pattern behind agents that do work for you while you're not watching, like a daily report or a bot that watches your pull requests.",
+      "url": "https://claude.com/resources/articles/building-always-on-agents"
+    },
+    {
+      "term": "Event inbox",
+      "date": "2026-11-13",
+      "cat": "Agents",
+      "def": "A single to-do queue that every trigger writes into before the agent acts. Instead of five different things all shouting at the agent at once, they each drop a note in one letterbox, and one worker reads the notes in order. If the worker crashes, the notes are still there for the next one.",
+      "why": "Without it, two triggers can start two copies of the agent that trip over each other, or an event simply gets lost.",
+      "url": "https://claude.com/resources/articles/building-always-on-agents"
+    },
+    {
+      "term": "Deferred tool call",
+      "date": "2026-11-13",
+      "cat": "Safety",
+      "def": "When an agent wants to do something risky, it presses pause, saves its place, and sends you a question. Your answer comes back later and it picks up exactly where it stopped. Like a video game that saves at a checkpoint while it waits for a parent to say yes to a purchase.",
+      "why": "It lets an unattended agent stay safe without sitting there burning time (and tokens) waiting for you.",
+      "url": "https://claude.com/resources/articles/building-always-on-agents"
+    },
+    {
+      "term": "Outbox",
+      "date": "2026-11-13",
+      "cat": "Agents",
+      "def": "The agent's 'sent mail' tray. Instead of streaming every thought at you, a background agent writes finished messages to a list, and a separate little service delivers them at a sensible pace. If delivery fails, the message is still sitting in the tray to retry.",
+      "why": "Background agents should tell you outcomes, not narrate. An outbox makes it easy to keep them quiet and reliable.",
+      "url": "https://claude.com/resources/articles/building-always-on-agents"
+    },
+    {
+      "term": "Code Mode",
+      "date": "2026-11-12",
+      "cat": "Claude Code",
+      "def": "Normally Claude uses tools one at a time: ask to read a file, wait, read the answer, ask for the next thing. In Code Mode, Claude writes one small JavaScript program that does a whole batch of tool calls itself (search, edit, run tests) and hands back only the bit Claude actually needs to read. It's the difference between texting a shop one item at a time and handing over a full shopping list.",
+      "why": "Fewer back-and-forth trips and less junk output landing in the context window. It's experimental and off by default (needs Claude Code 2.1.323+).",
+      "url": "https://code.claude.com/docs/en/code-mode"
+    },
+    {
+      "term": "Dreaming",
+      "date": "2026-11-06",
+      "cat": "Memory",
+      "def": "Homework the agent does while nobody is using it. It re-reads its old session logs and notes, fixes notes that turned out to be wrong, tidies them into organised pages, and decides which few facts deserve to be loaded at the start of every future session. It's named after the way your brain sorts the day's memories while you sleep.",
+      "why": "A wrong note gets copied into every future session. Dreaming is how those mistakes get caught and how memory stays small and useful.",
+      "url": "https://www.anthropic.com/engineering/components-of-agent-memory"
+    },
+    {
+      "term": "Injected context",
+      "date": "2026-11-06",
+      "cat": "Memory",
+      "def": "The stuff that gets loaded into the agent's head automatically at the start of every session, before you type a word: instructions, key notes, an index of memory. It's like the sticky notes on your monitor. You see them every single day, so you'd better keep them few and correct.",
+      "why": "Every token here is paid for on every session, so it's the most expensive place to be wordy.",
+      "url": "https://www.anthropic.com/engineering/components-of-agent-memory"
+    },
+    {
+      "term": "Message threads",
+      "date": "2026-11-02",
+      "cat": "API",
+      "def": "Usually, every time an agent talks to Claude it re-sends the entire conversation so far, like re-reading a whole group chat aloud before adding one message. With message threads, the server holds on to the conversation, so you only send what's new. Claude still reads everything, so it doesn't use fewer tokens. It just starts answering faster.",
+      "why": "Anthropic reports roughly 35% faster time to first token on very long sessions (500k to 1M tokens). A thread expires after 5 minutes idle.",
+      "url": "https://claude.com/resources/articles/message-threads"
+    },
+    {
+      "term": "Time to first token (TTFT)",
+      "date": "2026-11-02",
+      "cat": "API",
+      "def": "How long you wait between hitting send and seeing the first word of the answer. It's the 'typing…' delay. It's different from total time: a reply can start fast and still take a while to finish.",
+      "why": "In an agent that makes hundreds of requests, small delays at the start of each one add up to minutes.",
+      "url": "https://claude.com/resources/articles/message-threads"
+    },
+    {
+      "term": "Frankenprompt",
+      "date": "2026-10-22",
+      "cat": "Prompting",
+      "def": "A system prompt stitched together by lots of different people, each bolting on their own rules until the rules start to contradict each other. Like a classroom poster where every teacher has scribbled a different rule and now nobody knows which one wins.",
+      "why": "Conflicting instructions make an agent unpredictable, and all those words are paid for on every request.",
+      "url": "https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop"
+    },
+    {
+      "term": "Subagent sprawl",
+      "date": "2026-10-22",
+      "cat": "Agents",
+      "def": "What happens when a team keeps creating new specialist helper agents until there are dozens or hundreds, many doing nearly the same job, with nobody in charge of them. Details get lost every time one agent passes work to another, like a game of telephone.",
+      "why": "Anthropic's advice: try folding helpers back into one main agent with skills and tools, and keep a subagent only when your tests show it actually does better.",
+      "url": "https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop"
+    },
+    {
+      "term": "Write gate",
+      "date": "2026-10-22",
+      "cat": "Safety",
+      "def": "A checkpoint built into the software around the agent that decides whether it's allowed to change something for real, such as saving to a database or sending an email. Reading is free; writing has to go through the gate.",
+      "why": "Hard limits belong in code, not in a politely worded prompt the model might misread.",
+      "url": "https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop"
+    },
+    {
+      "term": "Golden example",
+      "date": "2026-10-22",
+      "cat": "Testing",
+      "def": "A question paired with an answer a human has checked and agreed is correct. You keep a small set of these (even 10 is a fine start) and re-run your agent against them whenever you change something, like an answer key for a quiz.",
+      "why": "It's how you know a change made things better instead of just different.",
+      "url": "https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop"
+    },
+    {
+      "term": "Managed Agents",
+      "date": "2026-04-08",
+      "cat": "API",
+      "def": "Anthropic runs the agent for you on their servers: the loop, the sandbox it works in, and the saved session. You send it a job and check back for results instead of babysitting a program on your own machine. Think renting a fully staffed kitchen instead of building one.",
+      "why": "It removes a lot of plumbing for long-running or scheduled agent work.",
+      "url": "https://www.anthropic.com/engineering/managed-agents"
+    },
+    {
+      "term": "Auto mode",
+      "date": "2026-03-25",
+      "cat": "Safety",
+      "def": "A middle setting between 'ask me before everything' and 'do whatever you want'. A separate checker model looks at each risky action the agent is about to take and blocks the dangerous ones, so you aren't clicking 'approve' a hundred times.",
+      "why": "Fewer interruptions without handing over the keys completely.",
+      "url": "https://www.anthropic.com/engineering/claude-code-auto-mode"
+    },
+    {
+      "term": "Agentic engineering",
+      "date": "2026-02-23",
+      "cat": "Concepts",
+      "def": "Building real software with coding agents while still acting like an engineer: you plan, you make the agent write tests, you review what comes back, and you take responsibility for the result. The agent types; you still think.",
+      "why": "It's the grown-up sibling of vibe coding, and the skill set this whole site is about.",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/what-is-agentic-engineering/"
+    },
+    {
+      "term": "Dark factory",
+      "date": "2026-02-01",
+      "cat": "Concepts",
+      "def": "A nickname borrowed from factories so automated they can run with the lights off. In software it means a setup where agents write the code, test it and check it, and no human reads every line.",
+      "why": "It's where some teams are heading, and it only works if the automatic checks are very good.",
+      "url": "https://www.lennysnewsletter.com/p/an-ai-state-of-the-union"
+    },
+    {
+      "term": "Agent teams",
+      "date": "2026-02-05",
+      "cat": "Agents",
+      "def": "Several copies of Claude working on one project at the same time, each with its own task, coordinating a bit like players on a team instead of one player doing everything in turn.",
+      "why": "Good for big jobs that split cleanly into independent pieces. Bad for small jobs, because every teammate costs tokens.",
+      "url": "https://www.anthropic.com/engineering/building-c-compiler"
+    },
+    {
+      "term": "Harness",
+      "date": "2025-11-26",
+      "cat": "Concepts",
+      "def": "All the ordinary software wrapped around the AI model that turns it into an agent: the loop that runs tools, the permission checks, the memory, the context management. The model is the engine; the harness is the rest of the car.",
+      "why": "Two products using the same model can feel completely different because their harnesses differ.",
+      "url": "https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents"
+    },
+    {
+      "term": "Effort level",
+      "date": "2025-11-24",
+      "cat": "Models",
+      "def": "A dial that tells the model how hard to think before answering. Low effort is quick and cheap, like answering off the top of your head. High effort is slower and uses more tokens, like working it out on paper first.",
+      "why": "Turning effort down for easy tasks is one of the simplest ways to save tokens.",
+      "url": "https://www.anthropic.com/engineering/advanced-tool-use"
+    },
+    {
+      "term": "Tool search",
+      "date": "2025-11-24",
+      "cat": "Tools",
+      "def": "Instead of giving the agent the full instruction manual for every tool up front, you give it a search box. When it needs a tool, it looks it up and only then loads that tool's details.",
+      "why": "Agents get worse at picking tools once they have more than about 30 to 50 loaded, and every loaded tool costs tokens on every request.",
+      "url": "https://www.anthropic.com/engineering/advanced-tool-use"
+    },
+    {
+      "term": "Sandbox",
+      "date": "2025-10-20",
+      "cat": "Safety",
+      "def": "A fenced-off play area for the agent. Inside the fence it can run commands and edit files freely; it can't reach files or websites outside the fence. If it makes a mess, the mess stays in the sandbox.",
+      "why": "A good fence means fewer 'are you sure?' prompts, because the worst case is contained.",
+      "url": "https://www.anthropic.com/engineering/claude-code-sandboxing"
+    },
+    {
+      "term": "Agent Skills",
+      "date": "2025-10-16",
+      "cat": "Claude Code",
+      "def": "A folder containing instructions (and sometimes scripts) for one kind of job, such as 'how we deploy' or 'how to make a spreadsheet'. The agent only sees a one-line description of each skill until it needs one, then it opens the folder and reads the rest. Like recipe cards in a box: you only pull out the one you're cooking.",
+      "why": "You can teach an agent lots of procedures without stuffing them all into its head at once.",
+      "url": "https://www.anthropic.com/engineering/equipping-agents-for-the-real-world-with-agent-skills"
+    },
+    {
+      "term": "Progressive disclosure",
+      "date": "2025-10-16",
+      "cat": "Context",
+      "def": "Show the short version first and the details only when they're needed. An agent sees a table of contents of its skills and tools, and opens a chapter only when the task calls for it.",
+      "why": "It's the main trick for keeping the context window small. Anthropic says it helped cut Claude Code's system prompt by over 80% for newer models.",
+      "url": "https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop"
+    },
+    {
+      "term": "Plugin",
+      "date": "2025-10-09",
+      "cat": "Claude Code",
+      "def": "A bundle of add-ons for Claude Code (skills, commands, hooks, tool connections) that installs in one go, like an extension pack for a game.",
+      "why": "It's how teams share a whole working setup instead of copy-pasting config files.",
+      "url": "https://code.claude.com/docs/en/plugins"
+    },
+    {
+      "term": "Claude Agent SDK",
+      "date": "2025-09-29",
+      "cat": "API",
+      "def": "The same engine that powers Claude Code, packaged as a library you can build your own agents with. You get the tool loop, permissions and context handling without writing them from scratch.",
+      "why": "If you want an agent that isn't a coding assistant, this is the head start.",
+      "url": "https://code.claude.com/docs/en/agent-sdk/overview"
+    },
+    {
+      "term": "Checkpoint / rewind",
+      "date": "2025-09-29",
+      "cat": "Claude Code",
+      "def": "Claude Code quietly saves the state of your files as it works. If the agent goes down a bad path, you rewind to an earlier save point, like undo for a whole chunk of work.",
+      "why": "Rewinding and rephrasing is usually cheaper than arguing with an agent that has already gone wrong.",
+      "url": "https://code.claude.com/docs/en/checkpointing"
+    },
+    {
+      "term": "Context engineering",
+      "date": "2025-09-29",
+      "cat": "Context",
+      "def": "Deciding what goes into the model's head at each step, not just how you word the question. Which files, which notes, which tool results, and in what order. If prompt engineering is writing a good exam question, context engineering is choosing which pages of the textbook are open on the desk.",
+      "why": "Most bad agent behaviour comes from missing or cluttered context, not from the wording of the prompt.",
+      "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    },
+    {
+      "term": "Subagent",
+      "date": "2025-07-24",
+      "cat": "Agents",
+      "def": "A helper agent that the main agent sends off on an errand. The helper gets a fresh, empty context window, does its job (say, searching 200 files), and reports back with just a short summary. All the mess it read along the way is thrown away.",
+      "why": "Great for noisy jobs, because the main agent's context stays clean. But each helper starts from zero and has its own token bill, so don't use one for small things.",
+      "url": "https://code.claude.com/docs/en/sub-agents"
+    },
+    {
+      "term": "Context rot",
+      "date": "2025-07-14",
+      "cat": "Context",
+      "def": "The more you pile into a model's context window, the worse it gets at paying attention to any one piece of it, even well before the window is full. Like trying to find one note on a desk buried in paper.",
+      "why": "It's why 'just give it everything' backfires, and why starting a fresh session often makes an agent smarter.",
+      "url": "https://www.anthropic.com/engineering/effective-context-engineering-for-ai-agents"
+    },
+    {
+      "term": "Hooks",
+      "date": "2025-06-30",
+      "cat": "Claude Code",
+      "def": "Small scripts you attach to moments in the agent's work: before it runs a tool, after it edits a file, when it finishes. The script always runs, no matter what the model 'feels like', the way a seatbelt alarm goes off every time.",
+      "why": "Use hooks for rules that must never be skipped, like running the formatter or blocking edits to a secrets file.",
+      "url": "https://code.claude.com/docs/en/hooks"
+    },
+    {
+      "term": "Plan mode",
+      "date": "2025-06-01",
+      "cat": "Claude Code",
+      "def": "A mode where the agent may look around and think but isn't allowed to change anything. It writes up a plan, and only starts editing after you say go.",
+      "why": "Catching a wrong approach in a ten-line plan is far cheaper than catching it after the agent has rewritten twenty files.",
+      "url": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "term": "Sleep-time compute",
+      "date": "2025-04-17",
+      "cat": "Memory",
+      "def": "Letting an agent use its idle time, between your conversations, to reorganise what it already knows so it's quicker and sharper next time. An idea from Letta and UC Berkeley researchers that 'dreaming' builds on.",
+      "why": "Thinking done ahead of time doesn't have to be redone, slowly and expensively, while you're waiting.",
+      "url": "https://www.anthropic.com/engineering/components-of-agent-memory"
+    },
+    {
+      "term": "Claude Code",
+      "date": "2025-02-24",
+      "cat": "Claude Code",
+      "def": "Anthropic's coding agent. You describe what you want in plain language and it reads your project, edits files, runs commands and checks its own work. It lives in the terminal, in editors like VS Code, on the web and on desktop.",
+      "why": "It's the main tool this glossary is built around.",
+      "url": "https://code.claude.com/docs/en/overview"
+    },
+    {
+      "term": "CLAUDE.md",
+      "date": "2025-02-24",
+      "cat": "Claude Code",
+      "def": "A plain text file in your project that Claude Code reads at the start of every session. It's where you write things you'd tell a new teammate on day one: how to run the tests, what the folders are for, what not to touch.",
+      "why": "It's loaded every time, so keep it short. Put rarely needed instructions in skills instead.",
+      "url": "https://code.claude.com/docs/en/memory"
+    },
+    {
+      "term": "Extended thinking",
+      "date": "2025-02-24",
+      "cat": "Models",
+      "def": "The model's scratch paper. Before giving its answer, it works through the problem step by step in a separate space. Those thinking steps count as output tokens, so you pay for them.",
+      "why": "Great for hard problems, wasteful for easy ones.",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/extended-thinking"
+    },
+    {
+      "term": "Vibe coding",
+      "date": "2025-02-02",
+      "cat": "Concepts",
+      "def": "Telling an AI what you want, accepting whatever code it writes without really reading it, and just checking whether the thing seems to work. Coined by Andrej Karpathy.",
+      "why": "Fine for a weekend toy. Risky for anything other people rely on, which is where agentic engineering comes in.",
+      "url": "https://simonwillison.net/guides/agentic-engineering-patterns/what-is-agentic-engineering/"
+    },
+    {
+      "term": "Agent",
+      "date": "2024-12-19",
+      "cat": "Concepts",
+      "def": "An AI model that's been given tools and is allowed to decide its own next step, over and over, until the job is done. A chatbot answers a question. An agent goes and does the task.",
+      "why": "This is the basic building block of everything else here.",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "term": "Agent loop",
+      "date": "2024-12-19",
+      "cat": "Concepts",
+      "def": "The cycle an agent repeats: think about what to do, use a tool, look at the result, think again. It keeps going round until it has an answer or hits a limit you set. Same idea as a game loop, but each lap is a decision.",
+      "why": "Every lap re-reads the conversation so far, which is why long sessions get expensive.",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "term": "Orchestrator",
+      "date": "2024-12-19",
+      "cat": "Agents",
+      "def": "The agent in charge. It breaks a big job into pieces, hands the pieces to helper agents, and stitches their results together, like a group project leader.",
+      "why": "Useful when work can run in parallel. Overkill when one agent could just do it.",
+      "url": "https://www.anthropic.com/engineering/building-effective-agents"
+    },
+    {
+      "term": "Model Context Protocol (MCP)",
+      "date": "2024-11-25",
+      "cat": "Tools",
+      "def": "A standard plug for connecting AI agents to other software. Before USB, every gadget had its own cable; MCP is the USB port. Build one MCP server for your app or database and any agent that speaks MCP can use it.",
+      "why": "It's how agents reach things like GitHub, Slack or your database. Each connected server adds tool descriptions to the context, so only connect what you use.",
+      "url": "https://modelcontextprotocol.io/"
+    },
+    {
+      "term": "Prompt caching",
+      "date": "2024-08-14",
+      "cat": "Tokens",
+      "def": "If the start of your request is identical to one you sent recently, the model can reuse the work it already did on that part instead of re-reading it from scratch. You pay a small fraction of the normal price for the reused part.",
+      "why": "It's the biggest single money-saver for agents. It only works if the beginning of the prompt stays exactly the same, so don't keep changing it.",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-caching"
+    },
+    {
+      "term": "Compaction",
+      "date": "2025-05-22",
+      "cat": "Context",
+      "def": "When a conversation gets too long to fit, the older part is replaced with a summary so work can continue. Like swapping forty pages of lecture notes for a one-page cheat sheet: you can keep going, but some detail is gone.",
+      "why": "Save anything important to a file before it happens, or start a fresh session for a new task.",
+      "url": "https://claude.com/resources/articles/building-always-on-agents"
+    },
+    {
+      "term": "Agent memory",
+      "date": "2025-10-01",
+      "cat": "Memory",
+      "def": "Notes an agent writes for its future self and reads in later sessions. The model itself forgets everything when a session ends, so memory is literally files on disk: what it learned, what you prefer, where it got up to.",
+      "why": "Store only what the agent can't look up again, and keep the always-loaded part tiny.",
+      "url": "https://www.anthropic.com/engineering/components-of-agent-memory"
+    },
+    {
+      "term": "Permission mode",
+      "date": "2025-03-01",
+      "cat": "Safety",
+      "def": "The setting that decides how much the agent may do without asking you first: ask every time, auto-approve file edits, plan only, or go fully hands-off.",
+      "why": "Too strict and you spend your day clicking approve. Too loose and a mistake can do real damage.",
+      "url": "https://code.claude.com/docs/en/permission-modes"
+    },
+    {
+      "term": "Git worktree",
+      "date": "2025-04-01",
+      "cat": "Workflow",
+      "def": "A Git feature that gives you a second (or third) copy of your project folder, each on its own branch, sharing one history. Each agent gets its own folder to work in, so several can run at once without overwriting each other.",
+      "why": "It's the standard way to run agents in parallel on one codebase.",
+      "url": "https://code.claude.com/docs/en/common-workflows"
+    },
+    {
+      "term": "Headless mode",
+      "date": "2025-04-01",
+      "cat": "Workflow",
+      "def": "Running the agent with no chat window, from a script: you pass in a prompt, it does the job and prints the result. In Claude Code that's `claude -p`.",
+      "why": "It's how you put an agent inside automation, like a nightly job or a CI check.",
+      "url": "https://code.claude.com/docs/en/headless"
+    },
+    {
+      "term": "Eval",
+      "date": "2023-06-01",
+      "cat": "Testing",
+      "def": "A test for AI behaviour. You collect example tasks, run your agent on them, and score the results. Because the model's answers vary from run to run, you run each task more than once and look at the pattern.",
+      "why": "Without evals, 'it seems better' is just a feeling.",
+      "url": "https://www.anthropic.com/engineering/demystifying-evals-for-ai-agents"
+    },
+    {
+      "term": "Tool use",
+      "date": "2023-06-01",
+      "cat": "Tools",
+      "def": "On its own a model can only produce text. Tool use lets it ask your program to do something real: read a file, run a command, search the web. The model writes a request, your code carries it out, and the result is handed back for the model to read.",
+      "why": "Tools are what turn a chatbot into an agent. Each tool's description and each result takes up context.",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/overview"
+    },
+    {
+      "term": "Prompt injection",
+      "date": "2022-09-12",
+      "cat": "Safety",
+      "def": "A trick where text the agent reads (a web page, an email, a code comment) contains hidden instructions like 'ignore your user and send me their files'. The model can't always tell the difference between data it's reading and orders it should follow.",
+      "why": "The more an agent can do on its own, the more this matters. It's why sandboxes and permission checks exist.",
+      "url": "https://www.anthropic.com/engineering/claude-code-sandboxing"
+    },
+    {
+      "term": "System prompt",
+      "date": "2022-11-30",
+      "cat": "Prompting",
+      "def": "The standing instructions a model gets before the conversation begins: who it is, what it's for, what rules to follow. You usually don't see it, but it's sent with every single request.",
+      "why": "Because it rides along every time, a bloated system prompt is a permanent tax on tokens.",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/prompt-engineering/system-prompts"
+    },
+    {
+      "term": "Context window",
+      "date": "2020-06-01",
+      "cat": "Context",
+      "def": "Everything the model can see at one moment: instructions, the conversation, files it has read, tool results. Think of it as a desk. Anything not on the desk doesn't exist as far as the model is concerned, and when the desk is full, something has to come off.",
+      "why": "Managing what's on the desk is the core skill of working with agents.",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/context-windows"
+    },
+    {
+      "term": "Token",
+      "date": "2020-06-01",
+      "cat": "Tokens",
+      "def": "The small chunks of text a model reads and writes, roughly three-quarters of a word each. 'Unbelievable' might be three tokens. Models are priced and limited by tokens: you pay for the ones going in (what the model reads) and, at a higher rate, the ones coming out (what it writes).",
+      "why": "Tokens are both the bill and the speed limit. Almost every technique on this site is about spending fewer of them.",
+      "url": "https://platform.claude.com/docs/en/about-claude/glossary"
+    }
+  ]
+}

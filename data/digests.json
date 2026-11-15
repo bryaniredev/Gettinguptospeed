@@ -1,0 +1,91 @@
+{
+  "issues": [
+    {
+      "date": "2026-11-15",
+      "title": "One script instead of twenty round trips",
+      "intro": "First issue, so this one catches up on the last two weeks from Anthropic. The common thread: load less, do more per step.",
+      "tldr": [
+        "Code Mode (experimental) lets Claude batch many tool calls into one script and read back only what it needs.",
+        "Anthropic's advice on subagents: you probably have too many. One loop with skills and tool search is often about 2x faster.",
+        "Message threads make long sessions start answering about 35% faster, but they don't save tokens.",
+        "For memory, keep the always-loaded part tiny. A wiki plus search beat search alone and saved about 20,000 tokens per question."
+      ],
+      "items": [
+        {
+          "headline": "Code Mode: Claude writes a script instead of calling tools one by one",
+          "summary": "New in Claude Code 2.1.323 behind an opt-in flag. Claude writes a short piece of JavaScript that runs several tool calls, in parallel if it likes, passes one result into the next, and returns only the part it needs to read. Best for repeated edits across many files, searches that need filtering, and independent commands that can run together.",
+          "try": "Set CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1 before starting claude in a terminal. Terminal only for now, and a Code Mode session can only be resumed with Code Mode on.",
+          "source": "Claude Code docs",
+          "url": "https://code.claude.com/docs/en/code-mode",
+          "tags": ["tokens", "claude-code"]
+        },
+        {
+          "headline": "When to fold subagents back into your main agent",
+          "summary": "Anthropic argues many teams split work across too many specialist agents. Details get lost at each handoff and every nested loop adds delay. One customer saw roughly 2x faster runs with a single loop. The replacement is progressive disclosure: skills hold the how-to, tool search keeps tool definitions out of the prompt until needed. Tool choice gets worse past about 30 to 50 loaded tools.",
+          "try": "Keep a subagent only when it runs in parallel, needs a throwaway context for noisy work, or your eval shows the single loop doing worse. Fold in one at a time and re-run the eval.",
+          "source": "Claude blog",
+          "url": "https://claude.com/resources/articles/building-agents-when-to-fold-subagents-into-your-main-agent-loop",
+          "tags": ["tokens", "architecture"]
+        },
+        {
+          "headline": "Message threads: send the conversation once",
+          "summary": "A Messages API beta where the server keeps the conversation and each later request sends only the new messages. Median time to first token drops about 35% on requests of 500k to 1M tokens. It's already on by default for most Claude Code users. Token usage and price are unchanged, because Claude still reads the whole conversation.",
+          "try": "If you build on the API, add the thread parameter and handle the 5-minute idle expiry by resending the full conversation.",
+          "source": "Claude blog",
+          "url": "https://claude.com/resources/articles/message-threads",
+          "tags": ["speed", "api"]
+        },
+        {
+          "headline": "The components of agent memory, and why agents should 'dream'",
+          "summary": "Anthropic lays out memory as layers: raw transcripts, notes, organised wikis, and a small set of notes injected into every session. Dreaming is an offline pass that checks notes against transcripts and reorganises them. On a 350,000-file corpus, wiki plus search scored 61% against 53% for search alone and used about 20,000 fewer tokens per question. Rigid rules such as 'record only failures' made stronger models worse.",
+          "try": "Tell the agent what memory is for instead of giving it a procedure. Store only what it can't look up again, and mark which facts are verified.",
+          "source": "Anthropic Engineering",
+          "url": "https://www.anthropic.com/engineering/components-of-agent-memory",
+          "tags": ["tokens", "memory"]
+        },
+        {
+          "headline": "Building always-on agents",
+          "summary": "A guide to agents that work across many sessions, built from five parts: an event inbox, timers, memory, permissions and an outbox. Each wake-up loads a baseline of system prompt, tool definitions and memory files, so that baseline is where the cost lives.",
+          "try": "Keep the baseline lean and cache it. Before compaction or a fresh session, write anything important to memory.",
+          "source": "Claude blog",
+          "url": "https://claude.com/resources/articles/building-always-on-agents",
+          "tags": ["architecture", "tokens"]
+        }
+      ],
+      "quickHits": [
+        {
+          "text": "Claude Fable 5.2 landed in Claude Code 2.1.321: 1M context, $8 in and $40 out per million tokens, cache reads at $0.20.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "Which Claude model should you build with? Anthropic's guide to picking between Fable 5.2, Opus 5.5, Sonnet 5.5 and Haiku 5.5 by task, cost and effort level.",
+          "url": "https://claude.dev/blog/which-claude-model-should-you-build-with/"
+        },
+        {
+          "text": "Set CLAUDE_CODE_DISABLE_AGENT_PROGRESS_SUMMARIES=1 to stop subagent progress summaries and the extra requests that write them.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "New permissions.denyInsteadOfPrompting setting: a tool call that would wait for approval is denied and the turn carries on. Handy for unattended runs.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "/claude-api latency-optimize finds where your Claude API code makes people wait and tries faster settings against your eval.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "Heads-up: fast mode for Opus 4.8 is deprecated and goes away on November 30.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        }
+      ],
+      "newTerms": [
+        "Code Mode",
+        "Message threads",
+        "Dreaming",
+        "Always-on agent",
+        "Event inbox",
+        "Frankenprompt"
+      ]
+    }
+  ]
+}
