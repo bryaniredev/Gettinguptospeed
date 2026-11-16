@@ -1,0 +1,599 @@
+{
+  "asOf": "2026-11-16",
+  "intro": "The current best practices for building software with Claude Code, one idea at a time. Read the rule, look at the example, then try the exercise.",
+  "source": "https://code.claude.com/docs/en/best-practices",
+  "sections": [
+    {
+      "id": "enforce-or-ask",
+      "group": "Start here",
+      "title": "Know which instructions are guaranteed",
+      "body": [
+        "Everything you tell Claude Code is one of two kinds. A prompt, `CLAUDE.md` or a skill is read by the model, which then decides what to do. It usually follows you, but there is no guarantee.",
+        "A hook, a deny rule or a managed setting is run by Claude Code itself (the harness), every time, whatever the model decided. It's the difference between advice to a teammate and a lock on the door.",
+        "Most of the time you want Claude to decide, because nearly every guideline has exceptions and Claude has the actual code in front of it. Keep the enforced kind for things that must always, or never, happen."
+      ],
+      "example": {
+        "label": "Two kinds of instruction",
+        "code": "Claude decides              Claude Code enforces\n-------------------------   ------------------------------\nyour prompt                 hooks\nCLAUDE.md                   deny rules\nskills                      the sandbox, managed settings\n/goal, /code-review         tests, a Stop hook, CI\neffort level                --max-turns, --max-budget-usd"
+      },
+      "tip": "If you keep adding emphasis to a `CLAUDE.md` line and Claude still misses it, that line belongs in a hook. The reverse holds too: a hook for a mere preference should be deleted.",
+      "exercise": {
+        "type": "classify",
+        "q": "Should each rule be left to Claude's judgment, or enforced by the harness?",
+        "buckets": ["Claude decides", "Enforce it"],
+        "items": [
+          { "t": "Never read `.env`", "b": 1, "why": "No exceptions and real damage if it slips. A deny rule." },
+          { "t": "Prefer named exports", "b": 0, "why": "A preference with plenty of exceptions. It stays in `CLAUDE.md`." },
+          { "t": "Always run the license-header script after creating a file", "b": 1, "why": "It must happen every time, so a hook runs it." },
+          { "t": "Use the error helpers in `src/lib/errors.ts`", "b": 0, "why": "A team convention Claude can apply with judgment." },
+          { "t": "Never edit the generated client in `src/gen/`", "b": 1, "why": "Zero exceptions. A hook that blocks edits to that path." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#deterministic-and-non-deterministic-instructions"
+    },
+    {
+      "id": "specific-prompt",
+      "group": "Tell Claude what it can't see",
+      "title": "Write a specific prompt",
+      "body": [
+        "Claude reads your code very well. What it can't read is your head. Name the file, describe the symptom and say what 'fixed' looks like, and you save yourself a round of corrections.",
+        "If you care which of two reasonable approaches it picks, say so. If you want the fuller version and not the smallest thing that satisfies the request, say `be ambitious` and spell out what that means.",
+        "When you're exploring and not fixing something specific, a vague prompt like `what would you improve in this file?` is completely fine."
+      ],
+      "example": {
+        "label": "Before and after",
+        "code": "Instead of:  fix the login bug\n\nTry:         users report login fails after the session times out.\n             look at token refresh in src/auth/, write a failing test\n             that reproduces it, then fix it"
+      },
+      "exercise": {
+        "type": "choice",
+        "q": "You want a calendar widget. Which prompt tells Claude the most that it couldn't work out alone?",
+        "options": [
+          { "t": "add a calendar widget", "why": "Claude has to guess which pattern to follow, what the widget should do and whether new libraries are allowed." },
+          { "t": "ADD A CALENDAR WIDGET. THIS IS IMPORTANT. BE THOROUGH.", "why": "Emphasis adds no information. Claude still doesn't know what you want." },
+          { "t": "follow the pattern in HotDogWidget.php and build a calendar widget that lets you pick a month and page between years. no new libraries", "ok": true, "why": "It names the pattern to copy, the behaviour and a constraint. None of those can be read from the code." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#write-a-specific-prompt"
+    },
+    {
+      "id": "hand-it-over",
+      "group": "Tell Claude what it can't see",
+      "title": "Hand over the real thing",
+      "body": [
+        "If you already have what Claude needs, give it the thing itself. A description of an error is always worse than the error.",
+        "Type `@` and a path to include a file's contents. Paste a screenshot of the design or the error straight into the prompt. Pipe command output in from your shell."
+      ],
+      "example": {
+        "label": "Pipe output straight in",
+        "code": "cat error.log | claude -p \"what's going on here\""
+      },
+      "exercise": {
+        "type": "fill",
+        "q": "Complete the command so Claude reads the log from the pipe, answers once and exits.",
+        "before": "cat error.log | claude ",
+        "after": " \"what's going on here\"",
+        "answers": ["-p", "--print"],
+        "hint": "It's the flag for a one-off, non-interactive run.",
+        "why": "`-p` runs a single prompt and exits, which is what makes Claude usable in pipes and scripts."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#write-a-specific-prompt"
+    },
+    {
+      "id": "interview-first",
+      "group": "Tell Claude what it can't see",
+      "title": "Not sure what you want? Get interviewed",
+      "body": [
+        "You don't need a finished plan before you prompt. Ask Claude to interview you. It comes back with multiple-choice questions about the parts you haven't pinned down and keeps going until the answers add up to a spec.",
+        "Then start a fresh session to build from `SPEC.md`. The build begins with a clean context and a written definition of done, and it's the same file you point a reviewer at later."
+      ],
+      "example": {
+        "label": "Prompt",
+        "code": "I want to add rate limiting to the public API but haven't thought it\nthrough yet. Interview me until you could write the spec, then write\nit to SPEC.md."
+      },
+      "exercise": {
+        "type": "choice",
+        "q": "The interview is over and SPEC.md is written. What's the best next move?",
+        "options": [
+          { "t": "Keep going and build it in the same session", "why": "It works, but the whole interview rides along on every turn of the build." },
+          { "t": "Start a fresh session and build from SPEC.md", "ok": true, "why": "Clean context, and the spec is a written definition of done." },
+          { "t": "Paste the spec into CLAUDE.md", "why": "`CLAUDE.md` loads into every session, including ones that have nothing to do with rate limiting." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#brainstorm-with-claude-first"
+    },
+    {
+      "id": "short-claude-md",
+      "group": "Tell Claude what it can't see",
+      "title": "Keep CLAUDE.md short",
+      "body": [
+        "`CLAUDE.md` is loaded into every session, so every line takes a little of Claude's attention on every task, relevant or not.",
+        "The test before writing a line: could Claude find this by reading the code, and would it actually go and look? If both are yes, leave it out.",
+        "What earns a place: the exact test, typecheck and lint commands; places where the code is misleading; decisions that aren't in the repo; anything you've had to correct twice."
+      ],
+      "example": {
+        "label": "CLAUDE.md",
+        "code": "# Commands\n- Install: pnpm install\n- Run one test file: pnpm vitest run path/to/file.test.ts\n- Typecheck: pnpm tsc --noEmit\n\n# Conventions\n- Use the error helpers in src/lib/errors.ts, never throw raw strings\n- src/legacy/ is still live but don't copy its patterns into new code\n\n# Gotchas\n- Integration tests need DATABASE_URL set, see .env.example"
+      },
+      "tip": "`/init` drafts the file, `/doctor` suggests cuts and `/doctor prompt-audit` flags instructions that are outdated or contradict each other. Aim for under 200 lines. Personal preferences go in `CLAUDE.local.md`, which you gitignore.",
+      "exercise": {
+        "type": "classify",
+        "q": "Keep this line in CLAUDE.md, or cut it?",
+        "buckets": ["Keep", "Cut"],
+        "items": [
+          { "t": "Run one test file: `pnpm vitest run path/to/file.test.ts`", "b": 0, "why": "Claude needs the exact command to check its own work." },
+          { "t": "Components live in `src/components`, tests live in `tests/`", "b": 1, "why": "Claude finds the layout by reading the repo." },
+          { "t": "Integration tests need `DATABASE_URL` set", "b": 0, "why": "A gotcha that takes digging to rediscover every session." },
+          { "t": "ALWAYS TYPECHECK BEFORE YOU FINISH!!!", "b": 1, "why": "Emphasis doesn't make it guaranteed. If it can't be skipped, it's a Stop hook." },
+          { "t": "`src/legacy/` is still live, but don't copy its patterns", "b": 0, "why": "The code is misleading here, and only you know that." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#keep-claude-md-short"
+    },
+    {
+      "id": "path-rules",
+      "group": "Tell Claude what it can't see",
+      "title": "Scope a rule to one part of the codebase",
+      "body": [
+        "If a rule only matters in one folder, put it in `.claude/rules/` with a `paths:` filter. It loads only when Claude is working on matching files, so it doesn't weigh on everything else."
+      ],
+      "example": {
+        "label": ".claude/rules/api.md",
+        "code": "---\npaths:\n  - \"src/api/**/*.ts\"\n---\n- Validate request bodies with the zod schemas in src/api/schemas/\n- Every new endpoint needs an entry in openapi.yaml, CI fails without it"
+      },
+      "exercise": {
+        "type": "fill",
+        "q": "Which frontmatter key makes this rule load only for files under src/api/?",
+        "before": "---\n",
+        "after": ":\n  - \"src/api/**/*.ts\"\n---\n- Validate request bodies with the zod schemas",
+        "answers": ["paths"],
+        "hint": "It's the plural of the thing you are filtering on.",
+        "why": "A rule file with a `paths:` filter loads only when Claude works on files that match."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#scope-rules-to-one-part-of-the-codebase"
+    },
+    {
+      "id": "skills",
+      "group": "Tell Claude what it can't see",
+      "title": "Put team procedures in skills",
+      "body": [
+        "Claude knows engineering, but not how your team cuts a release or writes its API docs. Save that as a skill at `.claude/skills/<name>/SKILL.md`.",
+        "Skills are lighter on context than `CLAUDE.md`. Claude sees only each skill's name and description in every session and reads the full file when the task calls for it. Like recipe cards in a box, you only pull out the one you're cooking.",
+        "For a workflow with side effects, add `disable-model-invocation: true`. Claude then can't start it on its own, and it only runs when you type the slash command yourself."
+      ],
+      "example": {
+        "label": ".claude/skills/release/SKILL.md",
+        "code": "---\nname: release\ndescription: Cut a new release. Bumps the version, writes the changelog entry, tags it and pushes the tag so CI can publish.\ndisable-model-invocation: true\n---\n1. Make sure you're on main with a clean tree. If not, stop and ask.\n2. Run `pnpm changeset version` and commit the result.\n3. Summarize the PRs merged since the last tag into CHANGELOG.md.\n4. Tag `v<new version>` and push the tag. CI publishes from there."
+      },
+      "exercise": {
+        "type": "fill",
+        "q": "This skill pushes a release tag. Make sure Claude can never start it by itself.",
+        "before": "---\nname: release\ndescription: Cut a new release.\ndisable-model-invocation: ",
+        "after": "\n---",
+        "answers": ["true"],
+        "hint": "It's a yes/no setting.",
+        "why": "With `disable-model-invocation: true` the skill runs only when you type `/release`."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#put-team-procedures-in-skills"
+    },
+    {
+      "id": "connect-tools",
+      "group": "Tell Claude what it can't see",
+      "title": "Connect the tools Claude needs",
+      "body": [
+        "Some of what Claude can't see lives in another system, like your issue tracker or error dashboard. If that system has a CLI, that's usually the easiest way in. With `gh` installed and signed in, Claude opens pull requests and reads review comments with no explanation from you. For a CLI it hasn't seen, pointing it at `--help` is enough.",
+        "No CLI? Add an MCP server. Connected servers add their tool names and instructions to the context even when you aren't using them, so turn off the ones you don't need under `/mcp`.",
+        "In a typed language, a code intelligence plugin lets Claude jump straight to a definition instead of reading through many files to find it."
+      ],
+      "example": {
+        "label": "Add an MCP server",
+        "code": "claude mcp add --transport http notion https://mcp.notion.com/mcp"
+      },
+      "exercise": {
+        "type": "choice",
+        "q": "Your error dashboard has a good CLI and also an MCP server. Which do you try first?",
+        "options": [
+          { "t": "The CLI", "ok": true, "why": "Usually the easiest way in, and it adds nothing to the context until Claude actually runs it." },
+          { "t": "The MCP server", "why": "It works, but every connected server adds tool names and instructions to each session." },
+          { "t": "Copy recent errors into CLAUDE.md", "why": "They'd be stale by tomorrow and loaded into every session." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#connect-the-tools-claude-needs"
+    },
+    {
+      "id": "pass-fail-check",
+      "group": "Give Claude a check to run",
+      "title": "Give Claude something that passes or fails",
+      "body": [
+        "Claude stops when the work looks done. If it has nothing to run, 'looks done' is all it has to go on, and you become the test suite.",
+        "Give it a check it can read: a test file, a build's exit code, a linter, a script that diffs output against a fixture, a browser screenshot next to the mockup. Then it can change, run, read the failure and fix, without you.",
+        "Whichever check you use, ask for evidence: the command it ran and its output. 'All tests pass' alone tells you very little."
+      ],
+      "example": {
+        "label": "Prompt",
+        "code": "add retry with backoff to the fetch client. run the client tests after,\nand keep going until they pass. show me the command you ran and its output"
+      },
+      "tip": "If your repo already has a check, the most useful line in `CLAUDE.md` is the command that runs it. Once Claude says it's done, `/verify` has it build and run the app and look at the result.",
+      "exercise": {
+        "type": "choice",
+        "q": "Claude reports: 'Done, all tests pass.' What's the best habit?",
+        "options": [
+          { "t": "Take its word for it", "why": "Usually true, but you have nothing to go on if it isn't." },
+          { "t": "Ask for the command it ran and the output", "ok": true, "why": "Reading the output is faster than rerunning the check, and for a session you weren't watching it's the only evidence you have." },
+          { "t": "Rerun every check yourself, every time", "why": "That makes you the test suite again." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#give-claude-a-check-to-run"
+    },
+    {
+      "id": "stop-hook",
+      "group": "Give Claude a check to run",
+      "title": "Make the check mandatory with a Stop hook",
+      "body": [
+        "There is a ladder of strictness. In the prompt, Claude decides when it's satisfied. With `/goal`, a separate model checks a condition after every turn and sends Claude back until it's met, which matters most for long background runs.",
+        "With a `Stop` hook, Claude Code runs your script whenever Claude tries to end its turn, and blocks the stop if the script exits with code 2. Whatever the script prints to stderr goes back to Claude as the reason it can't finish yet."
+      ],
+      "example": {
+        "label": ".claude/settings.json",
+        "code": "{\n  \"hooks\": {\n    \"Stop\": [\n      {\n        \"hooks\": [\n          { \"type\": \"command\", \"command\": \"pnpm tsc --noEmit 1>&2 || exit 2\" }\n        ]\n      }\n    ]\n  }\n}"
+      },
+      "exercise": {
+        "type": "fill",
+        "q": "Which exit code tells Claude Code to block the stop and send Claude back to work?",
+        "before": "\"command\": \"pnpm tsc --noEmit 1>&2 || exit ",
+        "after": "\"",
+        "answers": ["2"],
+        "hint": "It isn't 1.",
+        "why": "Exit code 2 blocks the stop. After eight blocked stops in a row with no tool call between them, Claude Code ends the turn anyway."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#enforce-the-check-with-a-stop-hook"
+    },
+    {
+      "id": "fresh-reviewer",
+      "group": "Give Claude a check to run",
+      "title": "Get a review from someone who didn't write it",
+      "body": [
+        "`/code-review` reviews the diff in a fresh subagent that never saw your conversation, so it isn't swayed by the reasoning that produced the code. A second session works too: one writes, the other reviews the file cold.",
+        "To review against your plan, write the prompt yourself and point it at the spec.",
+        "Tell the reviewer to skip style. A reviewer asked to find problems will always find something, and fixing every finding leaves you with extra abstraction layers and tests for cases that can't happen."
+      ],
+      "example": {
+        "label": "Prompt",
+        "code": "use a subagent to review the rate limiter diff against SPEC.md, check\nevery requirement is implemented and the listed edge cases have tests,\nreport gaps that affect correctness and skip style"
+      },
+      "exercise": {
+        "type": "choice",
+        "q": "The reviewer is the same model. So why does a fresh one help?",
+        "options": [
+          { "t": "It's smarter than the main session", "why": "Same model, so not smarter. Handing a task to a subagent doesn't improve the answer." },
+          { "t": "It hasn't seen the reasoning that produced the code", "ok": true, "why": "It judges the code as written, not the story of how it got there." },
+          { "t": "It's cheaper", "why": "It costs extra tokens, because it sends its own requests." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#review-against-your-spec"
+    },
+    {
+      "id": "hooks",
+      "group": "Enforce the rules that can't bend",
+      "title": "Use hooks for steps that must always happen",
+      "body": [
+        "Hooks run something of yours at fixed points in Claude's loop: before or after a tool call, when Claude tries to stop, when a session starts. Whether Claude remembers the rule no longer matters, because Claude isn't the one running it.",
+        "For real enforcement use a `command` or `http` hook. A `prompt` or `agent` hook asks another model to decide, so it isn't guaranteed either. Add `onFailure: \"block\"` if the action should also be stopped when the hook itself crashes or times out.",
+        "You don't have to write hooks by hand. `write a hook that blocks edits to the migrations folder` works as a prompt, and `/hooks` shows the result."
+      ],
+      "example": {
+        "label": ".claude/settings.json",
+        "code": "{\n  \"hooks\": {\n    \"PostToolUse\": [\n      {\n        \"matcher\": \"Edit|Write\",\n        \"hooks\": [\n          { \"type\": \"command\", \"command\": \"f=$(jq -r '.tool_input.file_path') && npx prettier --write --ignore-unknown \\\"$f\\\"\" }\n        ]\n      }\n    ]\n  }\n}"
+      },
+      "tip": "A hook is for a rule with zero exceptions. Keep the enforced set small: every hook will occasionally fire when it shouldn't, and someone has to maintain it.",
+      "exercise": {
+        "type": "fill",
+        "q": "You want the formatter to run after every file edit. Which hook event goes here?",
+        "before": "{\n  \"hooks\": {\n    \"",
+        "after": "\": [\n      { \"matcher\": \"Edit|Write\", \"hooks\": [ ... ] }\n    ]\n  }\n}",
+        "answers": ["PostToolUse"],
+        "hint": "It fires after a tool call finishes. The one that fires before is PreToolUse.",
+        "why": "`PostToolUse` with the matcher `Edit|Write` runs after every edit. `PreToolUse` is the one for blocking an action before it happens."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#enforce-steps-with-hooks"
+    },
+    {
+      "id": "deny-rules",
+      "group": "Enforce the rules that can't bend",
+      "title": "Lock things away with deny rules and the sandbox",
+      "body": [
+        "Permission rules decide what Claude may run, read and fetch. `deny` rules hold in every permission mode, including auto and `bypassPermissions`.",
+        "Rules match tool calls, not intent. A `Read` deny rule also catches `cat .env`, but not a script that opens the file. A `WebFetch` deny rule for a domain does nothing about `curl` to that domain unless the sandbox is on.",
+        "For an OS-level limit, turn on the sandbox with `/sandbox`. It confines Claude's shell commands and picks up your `Read` and `WebFetch(domain:...)` deny rules. For anything security-related you want both."
+      ],
+      "example": {
+        "label": ".claude/settings.json",
+        "code": "{\n  \"permissions\": {\n    \"allow\": [\"Bash(pnpm tsc --noEmit)\"],\n    \"ask\": [\"Bash(git push *)\"],\n    \"deny\": [\"Read(./.env)\", \"Read(./.env.local)\", \"Read(./secrets/**)\"]\n  }\n}"
+      },
+      "exercise": {
+        "type": "fill",
+        "q": "Stop Claude from ever seeing the contents of .env. Which tool does the rule name?",
+        "before": "\"deny\": [\"",
+        "after": "(./.env)\"]",
+        "answers": ["Read"],
+        "hint": "It's the tool Claude uses to look at a file.",
+        "why": "A `Read` deny rule blocks the Read tool and also the common file-reading commands such as `cat .env`."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#limit-access-with-permission-rules-and-the-sandbox"
+    },
+    {
+      "id": "rule-scope",
+      "group": "Enforce the rules that can't bend",
+      "title": "Put each rule where the right people get it",
+      "body": [
+        "Where a rule lives decides who it applies to. `.claude/settings.local.json` and `~/.claude/settings.json` are yours alone.",
+        "`.claude/settings.json` and the hooks in it belong to the repo. Once committed, they apply to everyone who works there.",
+        "Managed settings belong to the organisation, and no personal settings file can override them."
+      ],
+      "example": {
+        "label": "Who gets the rule",
+        "code": "~/.claude/settings.json        you, in every project\n.claude/settings.local.json    you, in this project\n.claude/settings.json          everyone who works in this repo\nmanaged settings               the whole organisation"
+      },
+      "exercise": {
+        "type": "choice",
+        "q": "Everyone on the team should be blocked from reading secrets/. Where does the deny rule go?",
+        "options": [
+          { "t": "~/.claude/settings.json", "why": "That only covers your machine." },
+          { "t": ".claude/settings.json, committed to the repo", "ok": true, "why": "Repo settings apply to everyone who works in the repo, and its deny rules apply right away." },
+          { "t": "A line in CLAUDE.md", "why": "That's a guideline, and Claude is allowed to decide a guideline doesn't apply." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#choose-who-a-rule-applies-to"
+    },
+    {
+      "id": "permission-modes",
+      "group": "Spend less time and fewer tokens",
+      "title": "Pick a permission mode on purpose",
+      "body": [
+        "New terminal and VS Code sessions start in auto mode. Claude works without stopping for routine approvals while a separate classifier model checks each action and blocks the kind you'd want a person to stop: `curl | bash`, production deploys, force pushes over other people's work.",
+        "Manual mode asks about every edit and command. Safe, but after the tenth prompt you start approving without reading. `bypassPermissions` approves everything your rules don't cover, which only makes sense in a disposable container.",
+        "Deny rules, ask rules and `PreToolUse` hooks run before the classifier sees anything, so they apply in auto mode exactly as they do everywhere else."
+      ],
+      "example": {
+        "label": "Controls",
+        "code": "Shift+Tab                          cycle through permission modes\nclaude --permission-mode manual    start in Manual\n/permissions                       see what auto mode recently blocked\n/fewer-permission-prompts          allowlist your common read-only commands"
+      },
+      "tip": "If auto mode keeps blocking something routine in your setup, describe it in `autoMode` in `~/.claude/settings.json`. Keep `\"$defaults\"` in every list, or your entries replace the built-in rules.",
+      "exercise": {
+        "type": "choice",
+        "q": "Auto mode's classifier is a model making a judgment call. Where should a 'never do this' rule live?",
+        "options": [
+          { "t": "Say it in the conversation", "why": "The classifier treats that as a block signal, but the sentence can be lost when the conversation compacts." },
+          { "t": "A deny rule or a hook", "ok": true, "why": "Those run before the classifier and hold in every mode." },
+          { "t": "CLAUDE.md, in capitals", "why": "Still a guideline. Emphasis mostly makes Claude over-apply it." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#change-the-permission-mode"
+    },
+    {
+      "id": "effort-model",
+      "group": "Spend less time and fewer tokens",
+      "title": "Use effort, not magic words",
+      "body": [
+        "Effort is the main control for how long Claude thinks. Phrases like `think harder` or `be thorough` are ordinary prompt text now. They can nudge Claude within its effort setting but won't lift it past it.",
+        "The default is `medium`, which is plenty for everyday feature work with a clear scope. Raise it when getting it right depends on cases that are quick to overlook. Lower it when you're going back and forth quickly and reviewing each result anyway.",
+        "For the model, the default Opus 5.5 handles most coding well, Sonnet costs less on routine work, and Haiku is a good fit for subagents doing simple jobs. `/model fable` switches to Fable 5.2."
+      ],
+      "example": {
+        "label": "The effort dial",
+        "code": "/effort low      quick back-and-forth, first sketches, small renames\n/effort medium   the default: everyday feature work\n/effort high     a bug in code you didn't write, a flaky test, a schema change\n/effort max      a hard problem Claude works through without you\nultrathink       deeper reasoning for this one message only"
+      },
+      "tip": "`max` on an ordinary task tends to overthink: you pay more for an answer that may be no better than `high`.",
+      "exercise": {
+        "type": "choice",
+        "q": "A flaky test in code you didn't write. What actually makes Claude reason more carefully?",
+        "options": [
+          { "t": "Add 'think really hard about this' to the prompt", "why": "That's ordinary text. It nudges within the current effort setting and no further." },
+          { "t": "/effort high", "ok": true, "why": "Claude checks more edge cases and verifies more of its work before answering." },
+          { "t": "IMPORTANT: BE THOROUGH", "why": "Capitals aren't a control. Effort is." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#change-the-model-and-effort"
+    },
+    {
+      "id": "subagents",
+      "group": "Spend less time and fewer tokens",
+      "title": "Know what subagents buy you, and what they cost",
+      "body": [
+        "Claude delegates to subagents on its own. Broad codebase searches go to the built-in Explore agent, and subagents run in the background so your main conversation keeps moving.",
+        "The cost is mostly tokens, because every subagent sends its own requests. Sometimes it's time as well: a fresh subagent first has to gather context your conversation already had.",
+        "It's the same model on the same task. You get parallelism or a fresh pair of eyes, not a smarter answer."
+      ],
+      "example": {
+        "label": ".claude/agents/reviewer.md",
+        "code": "---\nname: reviewer\ndescription: Reviews changed files against the spec they were built from. Use after implementing a feature, before opening the PR.\ntools: Read, Grep, Glob\n---\nYou're reviewing code you didn't write. Compare the changed files\nagainst the spec you're given, check that every requirement is\nimplemented and the listed edge cases have tests, and report only\nthe gaps that affect correctness. Skip style."
+      },
+      "tip": "To spend less: set `model: haiku` for simple jobs, ask for short summaries back, and check `/usage` to see which subagents earn their cost. Limiting `tools` is enforced by Claude Code, not just requested.",
+      "exercise": {
+        "type": "classify",
+        "q": "Is this a good reason to use a subagent?",
+        "buckets": ["Good reason", "Not a reason"],
+        "items": [
+          { "t": "Three independent pieces of work could run at the same time", "b": 0, "why": "Parallel work finishes sooner." },
+          { "t": "You want a better answer to the same question", "b": 1, "why": "Same model, same task. Delegating doesn't make the answer better." },
+          { "t": "A full test run would dump thousands of lines into your conversation", "b": 0, "why": "The noisy output stays out and only a summary comes back." },
+          { "t": "You're worried about running out of context", "b": 1, "why": "With a 1M-token window and automatic compaction that's rarely the problem now." },
+          { "t": "You want a reviewer that can read but not edit", "b": 0, "why": "Fresh eyes, with a tool limit the harness enforces." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#know-what-subagents-cost"
+    },
+    {
+      "id": "cost-context",
+      "group": "Spend less time and fewer tokens",
+      "title": "Keep cost and context down",
+      "body": [
+        "With a 1M-token window on most current models and automatic compaction, you'll rarely run out of context. You can still pay for context you don't need. Every request sends the whole conversation, so a session that has collected three unrelated tasks re-reads all three on every turn of the fourth.",
+        "`/usage` is the first place to look. It breaks your usage down by skill, subagent, plugin and MCP server, and flags patterns like long context or frequent cache misses.",
+        "`/clear` between unrelated tasks costs nothing. `/compact` with a focus keeps what matters, but on a long session it is itself a big request. And background work keeps spending while you aren't typing: a `/loop`, a goal's check after every turn, Claude's own subagents."
+      ],
+      "example": {
+        "label": "Commands",
+        "code": "/usage                     where did the tokens go?\n/context all               what is loaded right now?\n/clear oauth-migration     start fresh, and name the session you're leaving\n/compact keep the API changes and the test commands"
+      },
+      "tip": "The prompt cache lasts about an hour on a subscription and five minutes on an API key, cloud provider or usage credits. Re-reading the conversation is discounted while the cache is warm and full price once it expires.",
+      "exercise": {
+        "type": "choice",
+        "q": "You've just finished a feature and want to fix an unrelated bug in the same repo. What's the cheapest good move?",
+        "options": [
+          { "t": "Just keep going in the same session", "why": "Every turn of the bug fix re-reads the whole feature conversation." },
+          { "t": "/clear, then write the new prompt", "ok": true, "why": "It costs nothing, and the bug fix doesn't keep paying for the feature's history." },
+          { "t": "/compact first", "why": "Compacting reads the whole conversation to summarise it, and you don't need that history at all." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#keep-cost-and-context-down"
+    },
+    {
+      "id": "code-mode",
+      "group": "Spend less time and fewer tokens",
+      "title": "Batch tool calls with Code Mode (experimental)",
+      "body": [
+        "Normally Claude asks for one tool call, reads the result, then decides on the next. In Code Mode it writes a piece of JavaScript that makes several tool calls in one step, runs them in parallel where it can, and returns only the part it needs to read.",
+        "Try it on tasks with many related tool calls: a change repeated across many files, a search whose results need filtering first, several independent commands.",
+        "It's experimental and off by default. It needs Claude Code 2.1.323 or later in an interactive terminal session, and a Code Mode session can only be resumed with Code Mode on. Remote Control, Claude in Chrome and computer use aren't available in it."
+      ],
+      "example": {
+        "label": "Turn it on for one session",
+        "code": "CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1 claude"
+      },
+      "exercise": {
+        "type": "choice",
+        "q": "Which task is the best fit for Code Mode?",
+        "options": [
+          { "t": "Rename one variable in one file", "why": "One or two tool calls. Nothing to batch." },
+          { "t": "Read every Markdown file and list the links that point to files that don't exist", "ok": true, "why": "Many related tool calls whose results need filtering before Claude reads them." },
+          { "t": "Explain what this function does", "why": "That's reading and thinking, not a batch of tool calls." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/code-mode"
+    },
+    {
+      "id": "steer",
+      "group": "Steer the session",
+      "title": "Watch the first minute",
+      "body": [
+        "No amount of configuration replaces watching the first minute and stepping in when Claude heads somewhere you didn't intend.",
+        "`Esc` stops Claude mid-action and keeps everything up to that point. `/rewind` rolls the code, the conversation or both back to an earlier prompt, which makes it low-risk to try the bolder approach first.",
+        "If you've corrected the same thing twice and it's still wrong, don't write a third correction. `/clear` and write one new prompt that folds in what you learned."
+      ],
+      "example": {
+        "label": "Controls worth knowing by heart",
+        "code": "Esc                  stop now, keep the work so far\nEsc Esc              open the rewind menu (same as /rewind)\n/clear               start over with a better prompt\n/btw                 quick side question, nothing added to the history\n/rename my-task      name the session to resume it later\nclaude --continue    resume the most recent session"
+      },
+      "tip": "Checkpoints only cover files Claude edited with its own file tools. A file that only a Bash command touched isn't restored, so rewind works alongside git and doesn't replace it.",
+      "exercise": {
+        "type": "choice",
+        "q": "You've corrected Claude twice on the same thing and it's still wrong. Now what?",
+        "options": [
+          { "t": "Write a third, more detailed correction", "why": "It mostly adds to a conversation that already holds two failed attempts for Claude to keep re-reading." },
+          { "t": "/clear and write one new prompt that includes what you learned", "ok": true, "why": "A clean start with a better prompt works better almost every time." },
+          { "t": "Switch to max effort", "why": "More thinking over the same muddled history rarely fixes it." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#steer-the-session"
+    },
+    {
+      "id": "unattended",
+      "group": "Let Claude run without you",
+      "title": "Five questions before you walk away",
+      "body": [
+        "While you're watching, a missing piece of context costs a message or two. In a run you started before bed, nobody corrects it, and you find out in the morning that it spent the night building on the wrong assumption.",
+        "Go through these five with the specific task in mind. Starting the run, deciding what 'done' means and approving the result at the end stay with you."
+      ],
+      "example": {
+        "label": "Pre-flight checklist",
+        "code": "1. Done      a goal condition, a spec file, or a failing test to turn green\n2. Check     the test suite, a Stop hook, a review step\n3. Limits    permission rules, dontAsk, the sandbox, a worktree, one branch\n4. Brakes    --max-turns, --max-budget-usd, a spend limit\n5. Sign-off  a PR or summary, then a person approves the merge or deploy"
+      },
+      "exercise": {
+        "type": "choice",
+        "q": "Your overnight run has a spec, a test suite, a sandbox, and opens a PR for you to approve. What's missing?",
+        "options": [
+          { "t": "Stronger wording in the prompt", "why": "Telling it to keep going is more likely to cause over-work than fix anything." },
+          { "t": "A cap on turns or spend", "ok": true, "why": "Nothing stops it if it loops. Add `--max-turns`, `--max-budget-usd` or a spend limit." },
+          { "t": "A bigger model", "why": "The model isn't the gap here. The brakes are." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#let-claude-run-without-you"
+    },
+    {
+      "id": "headless",
+      "group": "Let Claude run without you",
+      "title": "Run Claude from a script",
+      "body": [
+        "`claude -p \"prompt\"` runs once and exits, which is how Claude Code ends up in CI jobs, git hooks and shell loops.",
+        "`--bare` skips hooks, skills, plugins, MCP servers and `CLAUDE.md`, so the run does the same thing wherever it runs. `--allowedTools` pre-approves tools, and `--permission-mode dontAsk` refuses anything else that would have prompted. `--output-format json` gives you one result object to parse.",
+        "Try it on three files first, see what goes wrong, fix the prompt, then run the rest."
+      ],
+      "example": {
+        "label": "A migration loop",
+        "code": "for file in $(cat files.txt); do\n  claude --bare -p \"Migrate $file to the new logger API and commit. Reply OK or FAIL.\" \\\n    --allowedTools \"Read,Edit,Bash(git add *),Bash(git commit *)\" \\\n    --permission-mode dontAsk \\\n    --max-turns 20\ndone"
+      },
+      "exercise": {
+        "type": "fill",
+        "q": "In a script, nobody is there to answer a permission prompt. Which mode refuses anything that isn't pre-approved?",
+        "before": "claude --bare -p \"Migrate $file to the new logger API\" \\\n  --allowedTools \"Read,Edit\" \\\n  --permission-mode ",
+        "after": " \\\n  --max-turns 20",
+        "answers": ["dontAsk"],
+        "hint": "Two words in camelCase: the opposite of asking.",
+        "why": "`dontAsk` allows only the pre-approved tools and refuses the rest, so the run can never hang on a prompt."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#run-claude-from-a-script"
+    },
+    {
+      "id": "schedule-parallel",
+      "group": "Let Claude run without you",
+      "title": "Schedule runs and work in parallel",
+      "body": [
+        "Claude can't decide to start. You, a timer or an event has to. `/loop` repeats a prompt on an interval inside an open session; each run is another turn in that session, so don't leave one going in a long conversation. `/schedule` sets up a cloud scheduled task that runs while your laptop is closed.",
+        "For separate work going at once, give each session its own checkout so the edits can't collide. `claude -w feature-auth` starts a session in a new git worktree. List the gitignored files you need, like `.env`, in `.worktreeinclude` and they're copied into every worktree.",
+        "For one big mechanical change, `/batch` splits the work into 5 to 30 units and shows you the plan. Once you approve, each unit gets its own worktree and opens a PR."
+      ],
+      "example": {
+        "label": "Three ways to multiply yourself",
+        "code": "/loop 15m check CI on this branch, and if it's red pull the failing job's log, fix it and push\n\nclaude -w feature-auth\n\n/batch migrate every handler to the v2 response helpers"
+      },
+      "tip": "Before leaving a cloud scheduled task running, protect `main` with a branch rule the task can't bypass, and watch the first few runs of anything new.",
+      "exercise": {
+        "type": "fill",
+        "q": "Start a second session in its own worktree so it can't collide with the first.",
+        "before": "claude ",
+        "after": " feature-auth",
+        "answers": ["-w", "--worktree"],
+        "hint": "One letter, short for worktree.",
+        "why": "`claude -w <name>` starts the session in a fresh worktree, which is a separate checkout of the same repo."
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#run-sessions-in-parallel"
+    },
+    {
+      "id": "stop-doing",
+      "group": "Unlearn",
+      "title": "Old habits you can drop",
+      "body": [
+        "Most old advice was a workaround for something models couldn't reliably do yet. The models have caught up, and some of those habits now make things worse.",
+        "If any advice starts to feel like busywork, that's a sign it may belong on this list too."
+      ],
+      "example": {
+        "label": "Then and now",
+        "code": "Old habit                          What to do now\n--------------------------------   ------------------------------------------\nALL CAPS and IMPORTANT             plain wording; a hook if it can't bend\n'think harder' in the prompt       /effort, or ultrathink for one message\n'keep going, don't be lazy'        give a check to pass; /goal or a Stop hook\nsubagents to save context          subagents for parallel work and fresh review\narchitecture notes in CLAUDE.md    Claude reads the repo itself"
+      },
+      "exercise": {
+        "type": "classify",
+        "q": "Still worth doing, or safe to drop?",
+        "buckets": ["Still worth doing", "Drop it"],
+        "items": [
+          { "t": "Writing IMPORTANT in capitals next to rules Claude keeps missing", "b": 1, "why": "Emphasis mostly makes Claude over-apply the rule. Shorten the file or use a hook." },
+          { "t": "`/clear` between unrelated tasks", "b": 0, "why": "A focused context gets better answers and costs less." },
+          { "t": "Describing your folder layout in `CLAUDE.md`", "b": 1, "why": "Claude reads the repo itself. Only write down what isn't in there." },
+          { "t": "Giving Claude a check it has to pass", "b": 0, "why": "This is how Claude knows the work is actually done." },
+          { "t": "Telling Claude 'don't be lazy, keep going until done'", "b": 1, "why": "More likely to cause over-work than fix a stall. If a run stops short, say `continue`." },
+          { "t": "Putting `ultrathink` in one tricky message", "b": 0, "why": "It still asks for deeper reasoning on that single turn." }
+        ]
+      },
+      "url": "https://code.claude.com/docs/en/best-practices#what-you-can-stop-doing"
+    }
+  ]
+}

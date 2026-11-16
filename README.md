@@ -5,6 +5,7 @@ A personal, non-indexed reference site for AI agentic software development.
 - **Glossary** – key terms explained simply, newest first, with instant search.
 - **Daily Brief** – a TL;DR newsletter on getting more from Claude for fewer tokens, linking to the source articles.
 - **Showcase** – a scrollable feed of things people are building with the latest AI models.
+- **Cheatsheet** – current Claude Code best practices, each with an example and a short exercise.
 
 Plain HTML, CSS and JavaScript. Content lives in `data/*.json`; see `CLAUDE.md` for the format and the daily update routine.
 

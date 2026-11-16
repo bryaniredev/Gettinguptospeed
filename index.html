@@ -18,6 +18,7 @@
       <button role="tab" id="tab-glossary" data-tab="glossary" aria-controls="panel-glossary">Glossary</button>
       <button role="tab" id="tab-brief" data-tab="brief" aria-controls="panel-brief">Daily Brief</button>
       <button role="tab" id="tab-showcase" data-tab="showcase" aria-controls="panel-showcase">Showcase</button>
+      <button role="tab" id="tab-cheatsheet" data-tab="cheatsheet" aria-controls="panel-cheatsheet">Cheatsheet</button>
     </nav>
   </div>
 </header>
@@ -45,6 +46,18 @@
       <p class="lede center">Cool things people are making with the newest AI models, from every lab.</p>
       <div id="labchips" class="chips center" aria-label="Filter by lab"></div>
       <div id="posts"></div>
+    </div>
+  </section>
+
+  <section id="panel-cheatsheet" class="panel wrap" role="tabpanel" aria-labelledby="tab-cheatsheet" hidden>
+    <div class="sheet">
+      <details id="toc" class="toc">
+        <summary><span>Sections</span><span id="progress-text" class="count-pill"></span></summary>
+        <div class="bar" aria-hidden="true"><i id="progress-bar"></i></div>
+        <nav id="toc-links" aria-label="Cheatsheet sections"></nav>
+        <button id="reset" class="btn ghost small" type="button">Reset progress</button>
+      </details>
+      <div id="sheet-body" class="sheet-body"></div>
     </div>
   </section>
 </main>
