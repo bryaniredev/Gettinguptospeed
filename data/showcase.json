@@ -1,6 +1,62 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "posts": [
+    {
+      "id": "argon-battle-helicopter",
+      "date": "2026-11-17",
+      "title": "A futuristic battle helicopter in Three.js",
+      "creator": "@thtbee_",
+      "model": "Gemini 4 Argon",
+      "lab": "Google",
+      "emoji": "🚁",
+      "blurb": "A sci-fi attack helicopter modelled and animated in the browser with Three.js, shown off in a 72-second clip.",
+      "source": "Watch on X",
+      "url": "https://x.com/thtbee_/status/2110069786415968754",
+      "tags": [
+        "3d",
+        "three.js"
+      ],
+      "image": "https://raw.githubusercontent.com/sandbase-lab/awesome-gemini4-argon/main/previews/2110069786415968754.webp",
+      "via": "awesome-gemini4-argon list",
+      "viaUrl": "https://github.com/sandbase-lab/awesome-gemini4-argon"
+    },
+    {
+      "id": "ancient-babylon",
+      "date": "2026-11-17",
+      "title": "Ancient Babylon, 600 BC",
+      "creator": "@literallydenis",
+      "model": "Claude Fable 5.2",
+      "lab": "Anthropic",
+      "emoji": "🏛️",
+      "blurb": "Babylon rebuilt from historical documents and plans the model found itself, over an 8-hour run. You can walk around freely.",
+      "source": "Explore it",
+      "url": "https://claude.ai/artifact/CTjrZXVdUgKJ6qJXrvvr28",
+      "tags": [
+        "3d",
+        "history"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/218.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "qwen-wukong-plane",
+      "date": "2026-11-17",
+      "title": "Sun Wukong flies a plane",
+      "creator": "@leo114119",
+      "model": "Qwen 4 Max Preview",
+      "lab": "Alibaba",
+      "emoji": "🐒",
+      "blurb": "The Monkey King at the controls of a plane, as a 3D scene in an HTML page. The author says it was made with Qwen 4 Max Preview.",
+      "source": "Watch on X",
+      "url": "https://x.com/leo114119/status/2120371909624033439",
+      "tags": [
+        "3d",
+        "html"
+      ],
+      "via": "awesome-ai-model-showcases list",
+      "viaUrl": "https://github.com/jammyfu/awesome-ai-model-showcases"
+    },
     {
       "id": "snowball-arena",
       "date": "2026-11-16",

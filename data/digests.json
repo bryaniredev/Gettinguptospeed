@@ -1,6 +1,74 @@
 {
   "issues": [
     {
+      "date": "2026-11-17",
+      "title": "A cheaper model with a smarter adviser on call",
+      "intro": "Nothing new has been published since yesterday: no Claude Code release, no Anthropic blog post, nothing from Simon Willison. So this issue catches up on the past week of Claude Platform release notes, which earlier issues skipped. It's for people building on the API.",
+      "tldr": [
+        "The advisor tool lets a cheaper model do the work and ask a smarter one for the plan, so most tokens are billed at the cheaper rate.",
+        "Fast mode on Fable 5.2 writes up to 2.5x faster at double the price. It doesn't start answering any sooner.",
+        "On Fable 5.2, only ever add to a conversation. Editing the system prompt, tools or an earlier message can now get the request rejected."
+      ],
+      "items": [
+        {
+          "headline": "The advisor tool: executor does the work, advisor makes the plan",
+          "summary": "The advisor tool (beta) lets a faster, lower-cost executor model consult a higher-intelligence advisor model in the middle of a task. The advisor reads the whole conversation and returns a plan or a course correction, then the executor carries on. Anthropic's docs say that for coding, a Sonnet executor at medium effort with an Opus advisor is comparable to Sonnet at default effort, at lower cost. What changed with Fable 5.2: a Fable 5.2 executor only accepts Fable 5.2 or Mythos 5.2 as its advisor, and every executor accepts Fable 5.2 as its advisor.",
+          "try": "Use it for long multi-step work where most turns are mechanical. It's a weak fit for single-turn questions. Each advisor call is billed at the advisor's rate, so cap them with max_uses, and turn on advisor caching only when you expect three or more calls in a conversation.",
+          "source": "Claude Platform docs",
+          "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool",
+          "tags": [
+            "tokens",
+            "api"
+          ]
+        },
+        {
+          "headline": "Fast mode comes to Fable 5.2",
+          "summary": "Set speed: \"fast\" on a Messages API request and Fable 5.2 produces up to 2.5x more output tokens per second, at $16 in and $80 out per million tokens, double the standard price. It's the same model with no change in intelligence. The gain is in how fast the answer is written, not in time to first token. Prompt caching multipliers apply on top of the fast price.",
+          "try": "Pay for it where a person is waiting on a long answer. Leave it off for background jobs nobody is watching.",
+          "source": "Claude Platform docs",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/fast-mode",
+          "tags": [
+            "speed",
+            "cost"
+          ]
+        },
+        {
+          "headline": "Fable 5.2 enforces the prefix check for everyone",
+          "summary": "On Fable 5.2, each thinking block is tied to what came before it: the system prompt, the tools and every earlier message. If your code edits any of those and then sends a later thinking block back, the request returns a 400 error. Switching models is safe: keep sending the whole conversation, and blocks the new model can't read are dropped for that request and not billed. No other model reads Fable 5.2's thinking blocks, so a move to Opus 5.5 continues without that reasoning.",
+          "try": "Treat conversation history as append-only and send assistant turns back exactly as the API returned them. Don't keep a separate history per model. Before switching an existing app to Fable 5.2, check whether it edits the prefix.",
+          "source": "Claude Platform docs",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/preserved-thinking",
+          "tags": [
+            "api",
+            "reliability"
+          ]
+        }
+      ],
+      "quickHits": [
+        {
+          "text": "Self-hosted Claude Managed Agents: run the whole service on your own infrastructure and keep agents, sessions and history there. Access is by request through your Anthropic account team.",
+          "url": "https://platform.claude.com/docs/en/managed-agents/self-hosted"
+        },
+        {
+          "text": "Dreams (research preview) in Managed Agents now supports Fable 5.2.",
+          "url": "https://platform.claude.com/docs/en/managed-agents/dreams"
+        },
+        {
+          "text": "Fable 5.2 uses the new computer_toolset_20260801 for computer use. Declaring the older computer_20251124 tool returns a 400 error everywhere except Amazon Bedrock.",
+          "url": "https://platform.claude.com/docs/en/release-notes/overview"
+        },
+        {
+          "text": "Text from Opus 4.6, Opus 4.5, Sonnet 4.5 and Haiku 4.5 now carries Anthropic's text watermark on supported platforms. A non-default temperature, top_p or top_k might leave it off.",
+          "url": "https://platform.claude.com/docs/en/build-with-claude/text-watermark"
+        }
+      ],
+      "newTerms": [
+        "Advisor tool",
+        "Fast mode",
+        "Prefix check"
+      ]
+    },
+    {
       "date": "2026-11-16",
       "title": "Compaction in plan mode just got pricier",
       "intro": "A quiet day. Nothing new from Anthropic's blogs or from Simon Willison, so this issue is all Claude Code 2.1.326, which is mostly safety tightening with a few changes that touch your token bill.",

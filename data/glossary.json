@@ -1,6 +1,30 @@
 {
-  "updated": "2026-11-16",
+  "updated": "2026-11-17",
   "terms": [
+    {
+      "term": "Advisor tool",
+      "date": "2026-11-17",
+      "cat": "API",
+      "def": "A way to let a cheaper, faster model do the work while calling on a smarter model at the tricky moments. The worker (the executor) does most of the typing. When it needs a plan, the smarter one (the advisor) reads the whole conversation and tells it what to do next. Like an apprentice doing the job with a master on the phone.",
+      "why": "Most tokens are billed at the cheaper model's rate while the quality gets close to the smarter model's. Each advisor call is billed at the advisor's rate, so cap them with `max_uses`.",
+      "url": "https://platform.claude.com/docs/en/agents-and-tools/tool-use/advisor-tool"
+    },
+    {
+      "term": "Fast mode",
+      "date": "2026-11-17",
+      "cat": "Models",
+      "def": "The same model running on a faster setup, for a higher price. It writes its answer up to 2.5 times quicker, but it isn't any smarter and it doesn't start answering sooner. Like paying for express delivery: same parcel, it just arrives faster.",
+      "why": "On Fable 5.2 it costs double. Worth it when a person is waiting on a long answer, wasted on a background job.",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/fast-mode"
+    },
+    {
+      "term": "Prefix check",
+      "date": "2026-11-17",
+      "cat": "API",
+      "def": "A rule on newer Claude models about the model's saved reasoning, its thinking blocks. Each block is tied to everything that came before it in the conversation: the system prompt, the tools and every earlier message. If your code changes any of that and then sends the block back, the check fails and the request can be rejected. Like a wax seal on a letter: change what's inside and the seal no longer matches.",
+      "why": "The safe habit is to only ever add to a conversation and never edit its past. That same habit is what keeps prompt caching working.",
+      "url": "https://platform.claude.com/docs/en/build-with-claude/preserved-thinking"
+    },
     {
       "term": "opusplan",
       "date": "2026-11-16",
