@@ -1,6 +1,89 @@
 {
   "issues": [
     {
+      "date": "2026-11-16",
+      "title": "Compaction in plan mode just got pricier",
+      "intro": "A quiet day. Nothing new from Anthropic's blogs or from Simon Willison, so this issue is all Claude Code 2.1.326, which is mostly safety tightening with a few changes that touch your token bill.",
+      "tldr": [
+        "With opusplan, automatic compaction in plan mode now runs on Opus, so it can cost more.",
+        "/update-config now uses about 13,000 tokens of context, down from 93,000.",
+        "Code Mode can now be turned on alongside agent teams.",
+        "Hooks and wildcard allow rules behave more strictly. Check yours after updating."
+      ],
+      "items": [
+        {
+          "headline": "Plan-mode compaction now uses the model that's answering you",
+          "summary": "Automatic compaction in plan mode now runs on the model answering you. If you use opusplan, that's Opus, so the changelog warns it can cost more. Compaction reads the whole conversation to summarise it, which makes it one of the larger requests in a long session.",
+          "try": "If you plan with opusplan, run /clear before starting an unrelated task so there's less history for a plan-mode compaction to summarise.",
+          "source": "Claude Code changelog",
+          "url": "https://code.claude.com/docs/en/changelog",
+          "tags": [
+            "tokens",
+            "cost"
+          ]
+        },
+        {
+          "headline": "/update-config is about 7x lighter",
+          "summary": "The built-in /update-config command now uses about 13,000 tokens of context instead of 93,000, and a rejected settings edit quotes only the settings that changed.",
+          "try": "Nothing to do except update. It's a reminder that slash commands load context too, and /usage shows what each one costs you.",
+          "source": "Claude Code changelog",
+          "url": "https://code.claude.com/docs/en/changelog",
+          "tags": [
+            "tokens",
+            "claude-code"
+          ]
+        },
+        {
+          "headline": "Code Mode now works with agent teams",
+          "summary": "Until now you couldn't start Code Mode with agent teams enabled. From 2.1.326 you can, and if you had already turned Code Mode on, sessions with teams enabled now start in it. Its permission checks also got stricter: more sandboxed commands ask or are refused, and the $ shell helper refuses some values with an error.",
+          "try": "Code Mode is still experimental and opt-in. Set CLAUDE_CODE_EXPERIMENTAL_CODE_MODE=1 in a terminal session to try it.",
+          "source": "Claude Code changelog",
+          "url": "https://code.claude.com/docs/en/changelog",
+          "tags": [
+            "claude-code",
+            "agents"
+          ]
+        },
+        {
+          "headline": "Stricter hooks and allow rules: check your setup",
+          "summary": "Several enforcement changes could surprise an existing configuration. A hook's \"decision\": \"block\" now holds in more cases, so a hook that always prints one may start blocking calls. Auto mode now ignores some wildcard shell allow rules, such as ones that name no program or start with $HOME, and lets its safety check decide instead. Some tool calls in bypass permissions mode now ask for approval, or are denied where nobody can be asked.",
+          "try": "After updating, run a normal task and watch for new blocks or prompts. For unattended runs, test once before trusting the schedule.",
+          "source": "Claude Code changelog",
+          "url": "https://code.claude.com/docs/en/changelog",
+          "tags": [
+            "safety",
+            "hooks"
+          ]
+        }
+      ],
+      "quickHits": [
+        {
+          "text": "The /claude-api skill now builds agents on Managed Agents by default, unless you want to host the agent loop yourself.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "/usage in fullscreen mode now shows your plan limit bars before session cost. /cost still starts with cost.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "/doctor now shares findings as it works instead of staying silent until the full report.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "A startup warning now flags an --allowedTools, --disallowedTools or --tools entry that doesn't look like a complete rule. Useful for scripts.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        },
+        {
+          "text": "Remote Control replies now stream to your phone or browser as they are written.",
+          "url": "https://code.claude.com/docs/en/changelog"
+        }
+      ],
+      "newTerms": [
+        "opusplan",
+        "Permission rule"
+      ]
+    },
+    {
       "date": "2026-11-15",
       "title": "One script instead of twenty round trips",
       "intro": "First issue, so this one catches up on the last two weeks from Anthropic. The common thread: load less, do more per step.",

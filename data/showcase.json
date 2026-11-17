@@ -1,6 +1,81 @@
 {
-  "updated": "2026-11-15",
+  "updated": "2026-11-16",
   "posts": [
+    {
+      "id": "snowball-arena",
+      "date": "2026-11-16",
+      "title": "Snowball Arena: last sled standing",
+      "creator": "BPCKeeeeeepOn",
+      "model": "GPT-6 Astra",
+      "lab": "OpenAI",
+      "emoji": "☃️",
+      "blurb": "Steer a sled across collapsing hexagonal ice floes, grow a snowball as you move and release it to knock rivals into the sea. Bigger snowballs hit harder but make turning slower.",
+      "source": "Play it",
+      "url": "https://snowball-arena-workbuddy.epic-tetra-9787.chatgpt.site/",
+      "tags": [
+        "game",
+        "multiplayer"
+      ],
+      "image": "https://github.com/user-attachments/assets/1af21a5c-a96a-4ddf-a306-7909f5ae13ab",
+      "via": "awesome-gpt-6-astra list",
+      "viaUrl": "https://github.com/MartinDelophy/awesome-gpt-6-astra"
+    },
+    {
+      "id": "house-bangers-generator",
+      "date": "2026-11-16",
+      "title": "A house music generator that taught itself music theory",
+      "creator": "@deedydas",
+      "model": "Claude Fable 5.2",
+      "lab": "Anthropic",
+      "emoji": "🎧",
+      "blurb": "It learned music theory, tries thousands of patterns per instrument and arranges the best ones into a 72-bar house track. Sound on.",
+      "source": "Open it",
+      "url": "https://claude.ai/artifact/N6bSgS4ZH5ifFQfg8sm4dv",
+      "tags": [
+        "music",
+        "generative"
+      ],
+      "image": "https://raw.githubusercontent.com/fengyiqicoder/awesome-fable-5.2/main/assets/gifs/217.gif",
+      "via": "awesome-fable-5.2 list",
+      "viaUrl": "https://github.com/fengyiqicoder/awesome-fable-5.2"
+    },
+    {
+      "id": "theme-park-hd",
+      "date": "2026-11-16",
+      "title": "A playable pixel-art theme park remake",
+      "creator": "@DeryaTR_",
+      "model": "Gemini 4 Carbon",
+      "lab": "Google",
+      "emoji": "🎢",
+      "blurb": "An HTML pixel-art remake of a classic theme park management game that you can play in the browser.",
+      "source": "Play it",
+      "url": "https://theme-park-hd.vercel.app",
+      "tags": [
+        "game",
+        "pixel-art"
+      ],
+      "via": "awesome-ai-model-showcases list",
+      "viaUrl": "https://github.com/jammyfu/awesome-ai-model-showcases"
+    },
+    {
+      "id": "within-gallery",
+      "date": "2026-11-16",
+      "title": "WITHIN: walk inside 18 paintings",
+      "creator": "fatasia",
+      "model": "GPT-6 Astra",
+      "lab": "OpenAI",
+      "emoji": "🖼️",
+      "blurb": "Explore 18 painting and landscape worlds in 3D, with guided tours, free roaming, a drive in a roadster and a boat ride through a cherry-blossom valley.",
+      "source": "Explore it",
+      "url": "https://fatasia.github.io/within/",
+      "tags": [
+        "3d",
+        "art"
+      ],
+      "image": "https://raw.githubusercontent.com/fatasia/within/34e80b3945ce863c482361a0478f78419a6d7465/public/previews/qingming.webp",
+      "via": "awesome-gpt-6-astra list",
+      "viaUrl": "https://github.com/MartinDelophy/awesome-gpt-6-astra"
+    },
     {
       "id": "starry-nightrider",
       "date": "2026-11-10",

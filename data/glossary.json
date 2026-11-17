@@ -1,6 +1,22 @@
 {
-  "updated": "2026-11-15",
+  "updated": "2026-11-16",
   "terms": [
+    {
+      "term": "opusplan",
+      "date": "2026-11-16",
+      "cat": "Models",
+      "def": "A model setting in Claude Code that uses two models for one job: the bigger Opus model while Claude is in plan mode, working out what to do, then the cheaper Sonnet model to actually do it. Like having a senior architect draw the plans and a builder carry them out.",
+      "why": "You pay the higher rate only for the thinking-heavy part. Anything else that happens during plan mode, such as automatic compaction, is billed at the Opus rate too.",
+      "url": "https://code.claude.com/docs/en/model-config"
+    },
+    {
+      "term": "Permission rule",
+      "date": "2026-11-16",
+      "cat": "Safety",
+      "def": "A line in your settings that says what Claude may do with a tool. There are three kinds: allow (go ahead without asking), ask (check with me first) and deny (never). Claude Code checks deny rules first, then ask, then allow, and the first match wins. Think of a guest list at a door: banned names are checked before the VIP list.",
+      "why": "Rules can use wildcards, like `Bash(git push *)`. A wide allow rule saves you prompts but approves more than you may have meant, which is why auto mode now ignores some of the widest ones.",
+      "url": "https://code.claude.com/docs/en/permissions"
+    },
     {
       "term": "Always-on agent",
       "date": "2026-11-13",
